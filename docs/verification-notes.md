@@ -46,3 +46,7 @@ The Supabase security advisor found no new finding tied to this migration. It di
 ## Open Item resolution UI — 2026-08-19
 
 The client was updated so that every entry whose result is `pending`, `partial` or `failed` is treated as an Open Item. Owner/Editor will now see **Close decision** for an open decision and **Mark resolved** for any other open action, state or finding. Both actions preserve the entry and update its result to `decided`. The local static preview loaded successfully after this update; authenticated interaction remains protected by the existing Supabase role boundary.
+
+## Production deployment check — 2026-08-19
+
+Immediately after pushing commit `45a387c`, the production HTML at `agentdock-e4u.pages.dev` still did not contain the new `Mark resolved`/`requestCloseItem` client code. The repository is synchronized, but Cloudflare Pages had not yet exposed the new build at the time of this check. A deployment refresh or short propagation wait is required before the new button can appear on production.
