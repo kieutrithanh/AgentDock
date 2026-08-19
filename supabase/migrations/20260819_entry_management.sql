@@ -1,59 +1,53 @@
 -- AgentDock: entry lifecycle and owner-controlled entry management
--- Apply in the Supabase SQL Editor or through the project's migration pipeline.
--- Assumes public.entries, public.project_members, auth.uid() and role values
--- owner/editor/viewer already exist as used by the AgentDock client.
+-- The AgentDock production project already enforces these permissions through
+-- private.can_write_project(project_id) and private.is_project_owner(project_id).
+-- This migration is intentionally idempotent: it adds only missing policies
+-- and never creates a duplicate permissive RLS policy.
 
 begin;
 
--- The existing schema represents a resolved decision with result = 'decided'.
--- Do not introduce a second lifecycle column until a future migration centralizes
--- lifecycle semantics across all entry types.
-
--- Replace these policy names only. Existing SELECT/INSERT policies remain intact.
-drop policy if exists "entries_update_owner_or_editor" on public.entries;
-drop policy if exists "entries_delete_owner_only" on public.entries;
-
-create policy "entries_update_owner_or_editor"
-on public.entries
-for update
-to authenticated
-using (
-  exists (
+do $$
+begin
+  if not exists (
     select 1
-    from public.project_members pm
-    where pm.project_id = entries.project_id
-      and pm.user_id = auth.uid()
-      and pm.role in ('owner', 'editor')
-  )
-)
-with check (
-  exists (
-    select 1
-    from public.project_members pm
-    where pm.project_id = entries.project_id
-      and pm.user_id = auth.uid()
-      and pm.role in ('owner', 'editor')
-  )
-);
+    from pg_policies
+    where schemaname = 'public'
+      and tablename = 'entries'
+      and policyname = 'entries_update_writer'
+  ) then
+    execute $policy$
+      create policy "entries_update_writer"
+      on public.entries
+      for update
+      to authenticated
+      using (private.can_write_project(project_id))
+      with check (private.can_write_project(project_id))
+    $policy$;
+  end if;
 
-create policy "entries_delete_owner_only"
-on public.entries
-for delete
-to authenticated
-using (
-  exists (
+  if not exists (
     select 1
-    from public.project_members pm
-    where pm.project_id = entries.project_id
-      and pm.user_id = auth.uid()
-      and pm.role = 'owner'
-  )
-);
+    from pg_policies
+    where schemaname = 'public'
+      and tablename = 'entries'
+      and policyname = 'entries_delete_owner'
+  ) then
+    execute $policy$
+      create policy "entries_delete_owner"
+      on public.entries
+      for delete
+      to authenticated
+      using (private.is_project_owner(project_id))
+    $policy$;
+  end if;
+end
+$$;
 
 commit;
 
--- Verification after applying (run as an authenticated owner/editor/viewer in the app):
--- 1. Owner: edit any entry, close a pending decision, and delete one disposable entry.
--- 2. Editor: edit/close succeeds; delete is rejected by RLS.
--- 3. Viewer: edit, close and delete are all rejected by RLS.
--- 4. Confirm the public Digest excludes results `decided` from Open Items.
+-- Expected access model:
+-- - Owner: edit, close decisions, and permanently delete entries.
+-- - Editor: edit and close decisions, but cannot delete.
+-- - Viewer: read only.
+-- - `result = decided` denotes a closed decision, preserving the original
+--   entry and keeping it out of Open Items while retaining timeline context.

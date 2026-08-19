@@ -25,3 +25,20 @@ The close-decision modal was opened in the live static preview via a non-persist
 ## Modal permanent-delete
 
 The permanent-delete modal was also opened in the static preview. It presents an explicit Owner-only label, explains the impact on Project Memory and future AI context, suggests safer alternatives, requires the exact text `DELETE`, and keeps cancellation adjacent to the destructive action. The modal remains visually consistent with the existing interface at desktop viewport size.
+
+## Production Supabase verification — 2026-08-19
+
+The Supabase connector was authenticated against the active **AgentDock** project (`jxtgysnbkvtlvorgarpo`) and migration `entry_lifecycle_management` was applied successfully. The migration was recorded as version `20260819023002`.
+
+The production `entries` schema supports the required `result = decided` value and has RLS enabled. The verified policies are:
+
+| Operation | Policy | Effective role boundary |
+|---|---|---|
+| SELECT | `entries_select_member` | Project member |
+| INSERT | `entries_insert_writer` | Owner or editor via `private.can_write_project` |
+| UPDATE / close decision | `entries_update_writer` | Owner or editor via `private.can_write_project` |
+| DELETE | `entries_delete_owner` | Owner only via `private.is_project_owner` |
+
+The database's existing policies already matched the required model, so the idempotent migration preserved them rather than creating duplicate permissive policies.
+
+The Supabase security advisor found no new finding tied to this migration. It did report pre-existing notices outside the scope of entry management: no policy on `watcher_v3_specs`, a `SECURITY DEFINER` watcher view, a deliberately callable `create_project` function, and disabled leaked-password protection. These were not modified in this change.
