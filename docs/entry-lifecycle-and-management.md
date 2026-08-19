@@ -6,7 +6,7 @@ AgentDock phải giữ đầy đủ Memory lịch sử nhưng không được đ
 
 ## Lifecycle cho quyết định
 
-Một entry `type = decision` có thể bắt đầu ở `result = pending`. Khi User xác nhận chuỗi timeline cho thấy việc thảo luận hoặc triển khai đã hoàn tất, User chọn **Close decision**. Hệ thống cập nhật entry đó sang `result = decided` và lưu `updated_at`. Entry không bị xóa, do đó timeline, provenance và nguyên nhân ban đầu vẫn còn nguyên vẹn. Digest chỉ nên tính các result mở như `pending`, `partial` hoặc `failed` vào Open Items; entry `decided` không còn được coi là việc cần AI tiếp tục theo đuổi.
+Một Open Item có `result = pending`, `partial` hoặc `failed` có thể được User xác nhận là đã xử lý, đã lỗi thời hoặc không còn cần AI tiếp tục theo đuổi. Với `type = decision`, UI hiển thị **Close decision**; với các loại `action`, `state` hoặc `finding`, UI hiển thị **Mark resolved**. Cả hai thao tác cập nhật entry sang `result = decided` và lưu `updated_at`. Entry không bị xóa, do đó timeline, provenance và nguyên nhân ban đầu vẫn còn nguyên vẹn. Digest chỉ nên tính `pending`, `partial` hoặc `failed` vào Open Items; entry `decided` không còn được coi là việc cần AI tiếp tục theo đuổi.
 
 > Việc đóng là một xác nhận của User về trạng thái hiện tại, không phải suy luận tự động của AI từ văn bản timeline.
 
@@ -26,7 +26,7 @@ Chỉnh sửa dùng khi nội dung cần được làm rõ hoặc sửa để tr
 
 Từ Evidence Inspector, Owner/Editor nhìn thấy ba thao tác tùy theo loại entry và trạng thái:
 
-1. **Close decision** chỉ xuất hiện với `type = decision` và `result = pending` hoặc `partial`.
+1. **Close decision** xuất hiện với decision đang `pending`, `partial` hoặc `failed`; **Mark resolved** xuất hiện với mọi Open Item còn lại ở các trạng thái này.
 2. **Edit entry** mở form được điền sẵn; cập nhật qua authenticated Supabase session và buộc xác nhận trước khi ghi.
 3. **Delete entry** chỉ hiện với Owner; confirmation yêu cầu nhập `DELETE`, sau đó xóa qua RLS.
 

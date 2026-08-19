@@ -16,18 +16,29 @@ try {
 
 for (const id of [
   'closeDecisionModal', 'entryDeleteModal', 'confirmCloseDecision',
-  'confirmEntryDelete', 'editEntry', 'closeDecision', 'deleteEntry'
+  'confirmEntryDelete', 'editEntry', 'closeItem', 'deleteEntry'
 ]) {
   if (!html.includes(id)) throw new Error(`Thiếu phần tử hoặc handler quản trị: ${id}`);
 }
 
 for (const functionName of [
-  'startEntryEdit', 'confirmCloseDecision', 'confirmEntryDelete',
+  'startEntryEdit', 'requestCloseItem', 'confirmCloseDecision',
+  'confirmEntryDelete', 'isOpenItem', 'closeItemLabel',
   'canManageEntries', 'canDeleteEntries'
 ]) {
   if (!clientScript.includes(`function ${functionName}`)) {
     throw new Error(`Thiếu hàm quản trị: ${functionName}`);
   }
+}
+
+if (!clientScript.includes("['pending','partial','failed'].includes(entry?.result)")) {
+  throw new Error('Open Item phải bao gồm các result pending, partial và failed.');
+}
+if (!clientScript.includes("entry?.type==='decision'?'Close decision':'Mark resolved'")) {
+  throw new Error('UI phải phân biệt nhãn Close decision và Mark resolved.');
+}
+if (!clientScript.includes("update({result:'decided',updated_at:new Date().toISOString()})")) {
+  throw new Error('Thao tác resolve phải cập nhật result sang decided.');
 }
 
 console.log('Entry-management UI static checks passed.');

@@ -42,3 +42,7 @@ The production `entries` schema supports the required `result = decided` value a
 The database's existing policies already matched the required model, so the idempotent migration preserved them rather than creating duplicate permissive policies.
 
 The Supabase security advisor found no new finding tied to this migration. It did report pre-existing notices outside the scope of entry management: no policy on `watcher_v3_specs`, a `SECURITY DEFINER` watcher view, a deliberately callable `create_project` function, and disabled leaked-password protection. These were not modified in this change.
+
+## Open Item resolution UI — 2026-08-19
+
+The client was updated so that every entry whose result is `pending`, `partial` or `failed` is treated as an Open Item. Owner/Editor will now see **Close decision** for an open decision and **Mark resolved** for any other open action, state or finding. Both actions preserve the entry and update its result to `decided`. The local static preview loaded successfully after this update; authenticated interaction remains protected by the existing Supabase role boundary.
