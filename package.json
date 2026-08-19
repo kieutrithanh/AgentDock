@@ -1,0 +1,15 @@
+{
+  "name": "agentdock",
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "node server.js",
+    "build": "echo 'Build complete'",
+    "start": "node server.js",
+    "lint": "node tests/check-entry-management.mjs",
+    "test": "node tests/check-entry-management.mjs"
+  },
+  "dependencies": {
+    "express": "^4.21.2"
+  }
+}

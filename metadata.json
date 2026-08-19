@@ -1,0 +1,8 @@
+{
+  "name": "AgentDock",
+  "description": "AgentDock V2 authenticated Project Memory workspace for AI agents and developers.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}

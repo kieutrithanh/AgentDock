@@ -4,7 +4,7 @@
   Security: Supabase Auth session + database RLS control reads and writes. No service-role key appears here.
 -->
 <!doctype html>
-<html lang="vi">
+<html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -13,20 +13,1394 @@
     <title>AgentDock V2 · Projects</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
     <style>
-      :root{--bg:#090c12;--raised:#10151e;--raised2:#151b27;--hover:#1a2230;--line:#273147;--line2:#1d2635;--text:#edf1f8;--muted:#94a0b4;--dim:#626f84;--accent:#635bff;--accent2:#817bff;--accentSoft:rgba(99,91,255,.16);--green:#38c68c;--greenSoft:rgba(56,198,140,.13);--amber:#e9b04b;--amberSoft:rgba(233,176,75,.14);--rose:#f06e86;--roseSoft:rgba(240,110,134,.13);--cyan:#49c9ec;--sans:"IBM Plex Sans",system-ui,sans-serif;--mono:"IBM Plex Mono",monospace;--ease:cubic-bezier(.2,.8,.2,1)}
-      *{box-sizing:border-box} body{margin:0;min-width:320px;color:var(--text);background:var(--bg);font:13px/1.45 var(--sans)} button,input,select,textarea{font:inherit} button{border:0} button:not(:disabled){cursor:pointer} button:disabled{cursor:not-allowed;opacity:.5} input,select,textarea{color:var(--text);background:#0c111a;border:1px solid var(--line);border-radius:5px;outline:0} input:focus,select:focus,textarea:focus{border-color:var(--accent2);box-shadow:0 0 0 3px rgba(99,91,255,.15)}
-      .hidden{display:none!important}.mono,.eyebrow{font-family:var(--mono)}.eyebrow{color:var(--dim);font-size:9px;letter-spacing:.06em;text-transform:uppercase}.dot{display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--dim)}.dot.green{background:var(--green);box-shadow:0 0 0 3px rgba(56,198,140,.11)}.dot.accent{background:var(--accent)}
-      .auth-shell{display:grid;min-height:100vh;grid-template-columns:minmax(0,1fr) minmax(380px,.72fr);background:var(--bg)}.auth-note{display:flex;flex-direction:column;padding:28px;min-height:100vh;border-right:1px solid var(--line);background:#0b0f17}.brand{display:flex;align-items:center;gap:10px;font-weight:700;font-size:15px}.brand-mark{display:grid;place-items:center;width:29px;height:29px;border:1px solid #7d77ff;border-radius:7px;color:#d9d7ff;background:var(--accentSoft);font:14px var(--mono);box-shadow:inset 5px 0 #4ac9e9,inset 10px 0 #817bff}.brand small{display:block;margin-top:1px;color:var(--dim);font:9px var(--mono);letter-spacing:.055em}.auth-console{max-width:720px;margin-top:52px}.preauth-strip{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));border:1px solid var(--line);border-radius:6px;overflow:hidden;background:var(--raised)}.preauth-cell{min-height:57px;padding:10px;border-right:1px solid var(--line)}.preauth-cell:last-child{border-right:0}.preauth-cell b{display:block;overflow:hidden;margin-top:4px;color:#dce4f1;font-size:10px;text-overflow:ellipsis;white-space:nowrap}.auth-console h1{margin:25px 0 7px;font-size:27px;letter-spacing:-.035em}.auth-console>p{max-width:650px;margin:0;color:var(--muted);font-size:12px;line-height:1.65}.auth-principles{display:grid;grid-template-columns:1.15fr 1fr 1fr;gap:1px;margin-top:24px;border:1px solid var(--line);background:var(--line)}.auth-principle{min-height:115px;padding:13px;background:var(--raised);color:var(--muted);font-size:10px;line-height:1.55}.auth-principle b{display:block;margin:5px 0 5px;color:var(--text);font-size:11px}.auth-card-wrap{display:grid;place-items:center;padding:28px}.auth-card{width:min(100%,410px);padding:24px;border:1px solid var(--line);border-radius:8px;background:var(--raised);box-shadow:0 26px 80px rgba(0,0,0,.3)}.auth-card h2{margin:4px 0 7px;font-size:22px;letter-spacing:-.025em}.auth-card>p{margin:0 0 22px;color:var(--muted);font-size:12px;line-height:1.6}.tabs{display:flex;gap:2px;margin-bottom:18px;padding:3px;border:1px solid var(--line);border-radius:6px;background:#0b1018}.tab{flex:1;min-height:32px;border-radius:4px;color:var(--muted);background:transparent;font-size:11px;font-weight:600}.tab.active{color:#e4e2ff;background:var(--accentSoft)}.auth-form{display:grid;gap:12px}label{display:grid;gap:6px;color:var(--muted);font:9px var(--mono);letter-spacing:.04em;text-transform:uppercase}input,select{width:100%;height:38px;padding:0 10px;font-size:12px}textarea{width:100%;min-height:148px;padding:10px;resize:vertical;font-size:12px;line-height:1.55}.primary,.secondary,.icon-btn{display:inline-flex;align-items:center;justify-content:center;gap:7px;min-height:34px;border:1px solid var(--line);border-radius:5px;padding:0 11px;color:var(--muted);background:var(--raised);font-size:11px;font-weight:600;transition:.14s var(--ease)}.primary{color:#fff;border-color:var(--accent);background:var(--accent)}.primary:hover{border-color:var(--accent2);background:#7069ee}.danger{color:#ffb3c0;border-color:rgba(240,110,134,.45);background:var(--roseSoft)}.danger:hover{color:#ffe2e7;border-color:var(--rose);background:rgba(240,110,134,.22)}.secondary:hover,.icon-btn:hover{color:var(--text);border-color:#3a4760;background:var(--hover)}.form-note{min-height:18px;margin:0;color:var(--muted);font-size:10px;line-height:1.5}.form-note.error{color:#ff9bad}.form-note.success{color:#87e5b8}.auth-boundary{margin-top:20px;padding:10px;border-left:2px solid var(--accent);background:#0c1119;color:var(--muted);font-size:10px;line-height:1.55}.auth-boundary b{color:#d9d7ff}
-      .app-shell{display:grid;grid-template-columns:240px minmax(0,1fr);height:100vh}.sidebar{display:flex;flex-direction:column;border-right:1px solid var(--line);background:#0b0f17}.sidebar .brand{min-height:62px;padding:0 16px;border-bottom:1px solid var(--line)}.nav-section{padding:14px 8px 6px}.nav-label{padding:0 8px 6px;color:var(--dim);font:9px var(--mono);letter-spacing:.06em;text-transform:uppercase}.nav-btn{display:flex;align-items:center;gap:9px;width:100%;min-height:38px;padding:0 9px;border:1px solid transparent;border-radius:5px;color:var(--muted);background:transparent;text-align:left;font-size:12px}.nav-btn:hover{color:var(--text);background:var(--hover)}.nav-btn.active{border-color:rgba(99,91,255,.5);color:#e3e1ff;background:var(--accentSoft)}.nav-ico{width:15px;font:13px var(--mono);text-align:center}.nav-count{margin-left:auto;padding:1px 5px;border:1px solid var(--line);border-radius:3px;color:var(--dim);font:9px var(--mono)}.sidebar-bottom{margin-top:auto;padding:12px;border-top:1px solid var(--line)}.identity{display:flex;gap:8px;align-items:center}.avatar{display:grid;place-items:center;width:27px;height:27px;border-radius:5px;color:#e5e3ff;background:#393474;font:10px var(--mono)}.identity b{display:block;max-width:155px;overflow:hidden;font-size:10px;text-overflow:ellipsis;white-space:nowrap}.identity span{display:block;margin-top:2px;color:var(--dim);font:9px var(--mono)}.signout{width:100%;margin-top:10px;color:var(--muted);background:transparent;text-align:left;font-size:10px}.signout:hover{color:#fff}
-      .main{min-width:0;overflow:auto;background:var(--bg)}.topbar{position:sticky;top:0;z-index:5;display:flex;align-items:center;justify-content:space-between;min-height:62px;padding:0 22px;border-bottom:1px solid var(--line);background:rgba(9,12,18,.96);backdrop-filter:blur(14px)}.crumb{display:flex;gap:8px;align-items:center;color:var(--muted);font-size:11px}.crumb b{color:var(--text)}.crumb i{color:var(--dim);font-style:normal}.top-actions{display:flex;gap:8px;align-items:center}.top-actions .secondary{min-height:31px}.page{display:none;padding:22px}.page.active{display:block;animation:fade .16s var(--ease)}@keyframes fade{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}.page-head{display:flex;align-items:flex-start;justify-content:space-between;gap:15px;margin-bottom:18px}.page-head h1{margin:2px 0 0;font-size:23px;letter-spacing:-.035em}.page-head p{max-width:610px;margin:5px 0 0;color:var(--muted);font-size:12px}.status-strip{display:flex;min-height:41px;margin-bottom:15px;overflow:auto;border:1px solid var(--line);border-radius:6px;background:var(--raised)}.status-cell{display:flex;align-items:center;gap:8px;min-width:156px;padding:0 12px;border-right:1px solid var(--line);white-space:nowrap}.status-cell:last-child{border-right:0}.status-k{display:block;color:var(--dim);font:8px var(--mono);letter-spacing:.05em;text-transform:uppercase}.status-v{display:block;max-width:160px;overflow:hidden;color:var(--text);font-size:10px;font-weight:600;text-overflow:ellipsis}.project-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(275px,1fr));gap:11px}.project-row{position:relative;display:grid;gap:12px;min-height:168px;padding:15px;border:1px solid var(--line);border-radius:6px;background:var(--raised);cursor:pointer;text-align:left;transition:.14s var(--ease)}.project-row:hover{border-color:#3e4e6b;background:var(--hover);transform:translateY(-1px)}.project-row .row-top{display:flex;align-items:center;justify-content:space-between;gap:8px}.project-row h2{margin:6px 0 0;font-size:15px;letter-spacing:-.015em}.project-row p{margin:0;color:var(--muted);font-size:11px;line-height:1.55}.role{display:inline-flex;width:fit-content;padding:3px 5px;border:1px solid rgba(99,91,255,.42);border-radius:3px;color:#cac7ff;background:var(--accentSoft);font:9px var(--mono);text-transform:uppercase}.project-foot{display:flex;justify-content:space-between;align-items:end;color:var(--dim);font:9px var(--mono)}.new-project{display:grid;place-items:center;min-height:168px;border:1px dashed #3c4963;border-radius:6px;color:var(--muted);background:transparent;cursor:pointer;text-align:center}.new-project b{display:block;margin:7px 0 3px;color:var(--text);font-size:12px}.new-project:hover{border-color:var(--accent2);color:#e4e2ff;background:var(--accentSoft)}.empty{padding:36px 18px;border:1px dashed var(--line);border-radius:6px;color:var(--muted);text-align:center}.empty b{display:block;margin-bottom:5px;color:var(--text);font-size:13px}.empty p{margin:0;font-size:11px}
-      .workspace-grid{display:grid;grid-template-columns:minmax(0,1fr) 310px;gap:14px}.panel{min-width:0;border:1px solid var(--line);border-radius:6px;background:var(--raised)}.panel-head{display:flex;align-items:center;justify-content:space-between;min-height:43px;padding:0 13px;border-bottom:1px solid var(--line)}.panel-head h2{margin:0;font-size:12px}.panel-head span{color:var(--dim);font:9px var(--mono)}.objective{padding:15px}.objective h2{margin:4px 0 6px;font-size:16px;letter-spacing:-.02em}.objective p{margin:0;color:var(--muted);font-size:11px;line-height:1.62}.metric-grid{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--line)}.metric{min-height:85px;padding:13px;background:var(--raised)}.metric b{display:block;margin:7px 0 2px;font-size:22px;letter-spacing:-.045em}.metric span{color:var(--muted);font-size:10px}.activity{padding:12px 13px;border-bottom:1px solid var(--line2)}.activity:last-child{border-bottom:0}.activity b{display:block;color:#dce4f1;font-size:11px}.activity p{margin:3px 0 0;color:var(--muted);font-size:10px;line-height:1.5}.activity time{display:block;margin-top:4px;color:var(--dim);font:9px var(--mono)}.access-list{display:grid;gap:0}.access-line{display:flex;gap:8px;align-items:start;padding:11px 13px;border-bottom:1px solid var(--line2)}.access-line:last-child{border-bottom:0}.access-line b{display:block;font-size:11px}.access-line p{margin:2px 0 0;color:var(--muted);font-size:10px;line-height:1.5}
-      .memory-tools{display:grid;grid-template-columns:minmax(190px,1fr) 130px auto;gap:8px;margin-bottom:10px}.search{display:flex;align-items:center;height:36px;border:1px solid var(--line);border-radius:5px;background:var(--raised)}.search span{padding:0 9px;color:var(--dim);font-family:var(--mono)}.search input{height:34px;padding:0 7px 0 0;border:0;background:transparent;box-shadow:none}.search input:focus{box-shadow:none}.count{display:flex;align-items:center;justify-content:center;min-width:94px;padding:0 8px;border:1px solid var(--line);border-radius:5px;color:var(--muted);background:var(--raised);font:9px var(--mono);white-space:nowrap}.tagbar{display:flex;gap:5px;margin-bottom:10px;overflow:auto}.tag{flex:0 0 auto;min-height:27px;padding:0 8px;border:1px solid var(--line);border-radius:4px;color:var(--muted);background:var(--raised);font:9px var(--mono)}.tag.active{border-color:rgba(99,91,255,.55);color:#d7d4ff;background:var(--accentSoft)}.tag:hover{color:var(--text);border-color:#3c4963}.table{border:1px solid var(--line);border-radius:6px;overflow:hidden;background:var(--raised)}.table-head,.entry-row{display:grid;grid-template-columns:85px minmax(180px,1fr) 112px 105px 104px;gap:10px;align-items:center}.table-head{min-height:32px;padding:0 11px;border-bottom:1px solid var(--line);color:var(--dim);background:#0c1119;font:8px var(--mono);letter-spacing:.05em;text-transform:uppercase}.entry-row{width:100%;min-height:58px;padding:8px 11px;border-bottom:1px solid var(--line2);color:inherit;background:transparent;text-align:left}.entry-row:last-child{border-bottom:0}.entry-row:hover,.entry-row.selected{background:var(--hover)}.entry-row.selected{box-shadow:inset 2px 0 var(--accent)}.entry-tag{display:inline-flex;width:fit-content;padding:3px 5px;border:1px solid #31405b;border-radius:3px;color:#b9ccff;background:#111d34;font:8px var(--mono);text-transform:uppercase}.entry-main{min-width:0}.entry-main b{display:block;overflow:hidden;color:#dce4f1;font-size:11px;text-overflow:ellipsis;white-space:nowrap}.entry-main span{display:block;overflow:hidden;margin-top:3px;color:var(--muted);font-size:9px;text-overflow:ellipsis;white-space:nowrap}.entry-meta{color:var(--muted);font:9px var(--mono);text-transform:uppercase}.entry-source,.entry-time{overflow:hidden;color:var(--muted);font:9px var(--mono);text-overflow:ellipsis;white-space:nowrap}.type-dot{display:inline-block;width:5px;height:5px;margin-right:5px;border-radius:50%;background:var(--cyan)}.result-success{color:#86e5b8}.result-pending,.result-partial{color:#f1c873}.result-failed{color:#ff9bad}.result-decided{color:#c9c5ff}
-      .write-grid{display:grid;grid-template-columns:minmax(0,1fr) 290px;gap:14px}.form-panel{padding:15px}.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}.full{grid-column:1/-1}.form-actions{display:flex;gap:8px;align-items:center;margin-top:12px}.preview{display:none;margin-top:13px;padding:12px;border:1px dashed #46587a;border-radius:5px;background:#0d1421}.preview.show{display:block}.preview h3{margin:5px 0 9px;font-size:13px}.preview p{margin:0;color:var(--muted);font-size:11px;line-height:1.6}.instruction{padding:15px}.instruction h2{margin:4px 0 8px;font-size:14px}.instruction p{margin:0;color:var(--muted);font-size:10px;line-height:1.65}.rule{display:grid;grid-template-columns:20px 1fr;gap:8px;padding:11px 0;border-bottom:1px solid var(--line2)}.rule:last-child{border-bottom:0}.rule span{color:var(--accent2);font:10px var(--mono)}.rule b{display:block;font-size:10px}.rule p{margin:2px 0 0;color:var(--muted);font-size:10px;line-height:1.5}
-      .share-url{width:100%;height:auto;min-height:44px;padding:10px;overflow:auto;border:1px solid #405071;border-radius:5px;color:#bfcfff;background:#0a101a;font:10px/1.55 var(--mono);word-break:break-all}.share-list{display:grid}.share-row{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:10px;align-items:center;padding:12px 13px;border-bottom:1px solid var(--line2)}.share-row:last-child{border-bottom:0}.share-row b{display:block;overflow:hidden;font-size:11px;text-overflow:ellipsis;white-space:nowrap}.share-row p{margin:3px 0 0;color:var(--muted);font:9px var(--mono);line-height:1.5}.share-row .form-actions{margin:0}.share-state{display:inline-flex;width:fit-content;margin-top:5px;padding:2px 5px;border:1px solid rgba(56,198,140,.33);border-radius:3px;color:#93e5bd;background:var(--greenSoft);font:8px var(--mono);text-transform:uppercase}.share-state.revoked{border-color:rgba(240,110,134,.35);color:#ffa1b0;background:var(--roseSoft)}.inspector{position:fixed;top:0;right:0;bottom:0;z-index:15;display:flex;flex-direction:column;width:min(380px,100vw);border-left:1px solid var(--line);background:#0c1018;box-shadow:-18px 0 55px rgba(0,0,0,.34);transform:translateX(105%);transition:transform .18s var(--ease)}.inspector.open{transform:none}.inspect-head{display:flex;align-items:center;justify-content:space-between;min-height:60px;padding:0 14px;border-bottom:1px solid var(--line)}.inspect-head h2{margin:3px 0 0;font-size:13px}.icon-btn{width:32px;padding:0;font-size:16px}.inspect-body{flex:1;overflow:auto;padding:14px}.inspect-body h3{margin:0 0 11px;font-size:14px;line-height:1.42}.inspect-content{padding:11px;border:1px solid var(--line);border-radius:4px;color:#bac5d6;background:#0a0f17;font-size:11px;line-height:1.65;white-space:pre-wrap}.inspect-meta{display:grid;margin-top:12px;border-top:1px solid var(--line)}.inspect-meta div{display:grid;grid-template-columns:88px minmax(0,1fr);gap:8px;padding:8px 0;border-bottom:1px solid var(--line2)}.inspect-meta span{color:var(--dim);font:8px var(--mono);text-transform:uppercase}.inspect-meta b{overflow:hidden;color:var(--muted);font:9px var(--mono);text-overflow:ellipsis;white-space:nowrap}.inspect-actions{display:flex;flex-wrap:wrap;gap:7px;margin-top:12px}.danger-note{margin-top:11px!important;color:#ffc0cb!important}.backdrop{position:fixed;inset:0;z-index:14;display:none;background:rgba(0,0,0,.58)}.backdrop.open{display:block}.modal{position:fixed;top:50%;left:50%;z-index:20;width:min(470px,calc(100vw - 28px));padding:18px;border:1px solid #3a4761;border-radius:7px;background:#121824;box-shadow:0 28px 80px rgba(0,0,0,.5);transform:translate(-50%,-45%) scale(.98);opacity:0;pointer-events:none;transition:.16s var(--ease)}.modal.open{transform:translate(-50%,-50%) scale(1);opacity:1;pointer-events:auto}.modal h2{margin:4px 0 7px;font-size:17px}.modal p{margin:0;color:var(--muted);font-size:11px;line-height:1.6}.modal-actions{display:flex;justify-content:flex-end;gap:8px;margin-top:17px}.toast{position:fixed;right:18px;bottom:18px;z-index:30;max-width:360px;padding:10px 12px;border:1px solid #3c4862;border-radius:5px;color:#dce6f6;background:#151c29;box-shadow:0 14px 40px rgba(0,0,0,.4);font-size:11px;opacity:0;transform:translateY(8px);pointer-events:none;transition:.15s var(--ease)}.toast.show{opacity:1;transform:none}.mobile-nav{display:none}
-      @media(max-width:780px){.auth-shell{display:block}.auth-note{min-height:auto;padding:18px;border:0}.auth-console{margin-top:22px}.auth-console h1,.auth-console>p,.auth-principles{display:none}.preauth-strip{grid-template-columns:1fr 1fr;border-right:0;border-left:0;border-radius:0}.preauth-cell{min-height:43px;padding:8px}.preauth-cell:nth-child(2){border-right:0}.preauth-cell:nth-child(-n+2){border-bottom:1px solid var(--line)}.auth-card-wrap{padding:20px 15px;min-height:calc(100vh - 145px)}.app-shell{display:block;height:auto;min-height:100vh}.sidebar{display:none}.main{overflow:visible;padding-bottom:59px}.topbar{min-height:52px;padding:0 13px}.top-actions .secondary{display:none}.page{padding:14px}.page-head{margin-bottom:13px}.page-head h1{font-size:20px}.page-head p{display:none}.status-strip{margin:0 -14px 12px;border-right:0;border-left:0;border-radius:0}.status-cell{min-width:146px}.workspace-grid,.write-grid{grid-template-columns:1fr}.memory-tools{grid-template-columns:minmax(0,1fr) 112px}.count{grid-column:1/-1;justify-content:flex-start;min-height:30px}.table-head{display:none}.entry-row{grid-template-columns:66px minmax(0,1fr) 17px;min-height:69px;padding:8px}.entry-row .entry-meta,.entry-row .entry-source,.entry-row .entry-time{display:none}.entry-main b{white-space:normal;line-height:1.32}.entry-main span{white-space:nowrap}.entry-row:after{content:'›';color:#bcb8ff;font-size:16px;text-align:right}.entry-tag{font-size:8px}.share-row{grid-template-columns:1fr}.mobile-nav{position:fixed;right:0;bottom:0;left:0;z-index:10;display:grid;grid-template-columns:repeat(5,1fr);height:59px;border-top:1px solid var(--line);background:rgba(11,15,23,.98);backdrop-filter:blur(12px)}.mobile-nav button{color:var(--muted);background:transparent;font-size:9px}.mobile-nav button.active{color:#d8d5ff}.mobile-nav b{display:block;margin-bottom:2px;font:13px var(--mono)}}
-      @media(prefers-reduced-motion:reduce){*,*:before,*:after{transition-duration:.001ms!important;animation-duration:.001ms!important}}
+      :root{
+        --bg:#07090e;
+        --bg-mesh:radial-gradient(ellipse 80% 60% at 50% -10%, rgba(99,102,241,0.12), transparent 70%), radial-gradient(circle at 100% 100%, rgba(139,92,246,0.06), transparent 50%);
+        --surface:#0e121b;
+        --surface-glass:rgba(14,18,27,0.78);
+        --card:rgba(18,23,36,0.65);
+        --card-hover:rgba(25,32,49,0.85);
+        --card-solid:#131825;
+        --border:rgba(255,255,255,0.08);
+        --border-subtle:rgba(255,255,255,0.04);
+        --border-hover:rgba(129,140,248,0.35);
+        --border-focus:#6366f1;
+        --line:#1c2333;
+        --line2:#151b28;
+        --text:#f8fafc;
+        --text-secondary:#cbd5e1;
+        --muted:#94a3b8;
+        --dim:#64748b;
+        --accent:#6366f1;
+        --accent2:#818cf8;
+        --accent3:#a5b4fc;
+        --accentSoft:rgba(99,102,241,0.12);
+        --accentGlow:rgba(99,102,241,0.28);
+        --green:#10b981;
+        --greenSoft:rgba(16,185,129,0.12);
+        --greenGlow:rgba(16,185,129,0.25);
+        --amber:#f59e0b;
+        --amberSoft:rgba(245,158,11,0.12);
+        --rose:#f43f5e;
+        --roseSoft:rgba(244,63,94,0.12);
+        --roseGlow:rgba(244,63,94,0.25);
+        --cyan:#06b6d4;
+        --cyanSoft:rgba(6,182,212,0.12);
+        --sans:"Plus Jakarta Sans",-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
+        --mono:"JetBrains Mono",ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace;
+        --ease:cubic-bezier(0.16, 1, 0.3, 1);
+        --shadow-sm:0 2px 8px rgba(0,0,0,0.3);
+        --shadow-md:0 12px 32px -4px rgba(0,0,0,0.45);
+        --shadow-lg:0 24px 60px -10px rgba(0,0,0,0.65);
+        --radius-sm:6px;
+        --radius-md:10px;
+        --radius-lg:14px;
+        --radius-full:9999px;
+      }
+      *{box-sizing:border-box}
+      body{
+        margin:0;
+        min-width:320px;
+        color:var(--text);
+        background:var(--bg);
+        background-image:var(--bg-mesh);
+        background-attachment:fixed;
+        font:13.5px/1.55 var(--sans);
+        letter-spacing:-0.01em;
+        -webkit-font-smoothing:antialiased;
+        -moz-osx-font-smoothing:grayscale;
+      }
+      ::selection{background:rgba(99,102,241,0.35);color:#fff}
+      ::-webkit-scrollbar{width:6px;height:6px}
+      ::-webkit-scrollbar-track{background:transparent}
+      ::-webkit-scrollbar-thumb{background:rgba(255,255,255,0.12);border-radius:10px}
+      ::-webkit-scrollbar-thumb:hover{background:rgba(255,255,255,0.22)}
+      
+      button,input,select,textarea{font:inherit}
+      button{border:0}
+      button:not(:disabled){cursor:pointer}
+      button:disabled{cursor:not-allowed;opacity:.45}
+      input,select,textarea{
+        color:var(--text);
+        background:rgba(11,15,24,0.7);
+        border:1px solid var(--border);
+        border-radius:var(--radius-sm);
+        outline:0;
+        transition:all .18s var(--ease);
+      }
+      input:focus,select:focus,textarea:focus{
+        border-color:var(--accent2);
+        background:rgba(14,19,30,0.95);
+        box-shadow:0 0 0 3px var(--accentSoft), 0 0 16px -2px var(--accentGlow);
+      }
+      .hidden{display:none!important}
+      .mono,.eyebrow{font-family:var(--mono)}
+      .eyebrow{
+        color:var(--dim);
+        font-size:9.5px;
+        font-weight:600;
+        letter-spacing:.08em;
+        text-transform:uppercase;
+      }
+      .dot{
+        display:inline-block;
+        width:7px;
+        height:7px;
+        border-radius:50%;
+        background:var(--dim);
+      }
+      .dot.green{
+        background:var(--green);
+        box-shadow:0 0 8px var(--green);
+      }
+      .dot.accent{
+        background:var(--accent2);
+        box-shadow:0 0 8px var(--accent);
+      }
+
+      /* Auth View - High-Tech Linear/OpenAI aesthetic */
+      .auth-shell{
+        display:grid;
+        min-height:100vh;
+        grid-template-columns:minmax(0,1.15fr) minmax(390px,.85fr);
+        background:var(--bg);
+        background-image:var(--bg-mesh);
+      }
+      .auth-note{
+        display:flex;
+        flex-direction:column;
+        padding:40px 48px;
+        min-height:100vh;
+        border-right:1px solid var(--border);
+        background:linear-gradient(180deg, rgba(14,18,28,0.5) 0%, rgba(7,9,14,0.85) 100%);
+        backdrop-filter:blur(24px);
+      }
+      .brand{
+        display:flex;
+        align-items:center;
+        gap:12px;
+        font-weight:800;
+        font-size:16px;
+        letter-spacing:-0.03em;
+      }
+      .brand-mark{
+        display:grid;
+        place-items:center;
+        width:32px;
+        height:32px;
+        border:1px solid rgba(255,255,255,0.18);
+        border-radius:9px;
+        color:#fff;
+        background:linear-gradient(135deg, #6366f1 0%, #8b5cf6 50%, #d946ef 100%);
+        font:15px/1 var(--mono);
+        box-shadow:0 0 20px -2px rgba(99,102,241,0.5), inset 0 1px 0 rgba(255,255,255,0.3);
+      }
+      .brand small{
+        display:block;
+        margin-top:2px;
+        color:var(--dim);
+        font:9.5px var(--mono);
+        letter-spacing:.07em;
+      }
+      .auth-console{
+        max-width:680px;
+        margin-top:60px;
+      }
+      .preauth-strip{
+        display:grid;
+        grid-template-columns:repeat(4,minmax(0,1fr));
+        border:1px solid var(--border);
+        border-radius:var(--radius-md);
+        overflow:hidden;
+        background:var(--card);
+        backdrop-filter:blur(16px);
+        box-shadow:var(--shadow-sm), inset 0 1px 0 rgba(255,255,255,0.06);
+      }
+      .preauth-cell{
+        min-height:60px;
+        padding:12px 14px;
+        border-right:1px solid var(--border);
+      }
+      .preauth-cell:last-child{border-right:0}
+      .preauth-cell b{
+        display:block;
+        overflow:hidden;
+        margin-top:4px;
+        color:var(--text-secondary);
+        font-size:11px;
+        font-weight:600;
+        text-overflow:ellipsis;
+        white-space:nowrap;
+      }
+      .auth-console h1{
+        margin:32px 0 10px;
+        font-size:32px;
+        font-weight:800;
+        letter-spacing:-.04em;
+        line-height:1.15;
+        background:linear-gradient(180deg, #ffffff 0%, #cbd5e1 100%);
+        -webkit-background-clip:text;
+        -webkit-text-fill-color:transparent;
+      }
+      .auth-console>p{
+        max-width:580px;
+        margin:0;
+        color:var(--muted);
+        font-size:13.5px;
+        line-height:1.65;
+      }
+      .auth-principles{
+        display:grid;
+        grid-template-columns:repeat(3, 1fr);
+        gap:12px;
+        margin-top:32px;
+      }
+      .auth-principle{
+        min-height:125px;
+        padding:16px;
+        border:1px solid var(--border);
+        border-radius:var(--radius-md);
+        background:var(--card);
+        backdrop-filter:blur(14px);
+        color:var(--muted);
+        font-size:11px;
+        line-height:1.55;
+        box-shadow:var(--shadow-sm), inset 0 1px 0 rgba(255,255,255,0.04);
+        transition:all .2s var(--ease);
+      }
+      .auth-principle:hover{
+        border-color:var(--border-hover);
+        transform:translateY(-2px);
+        background:var(--card-hover);
+      }
+      .auth-principle b{
+        display:block;
+        margin:6px 0 4px;
+        color:var(--text);
+        font-size:12.5px;
+        font-weight:600;
+      }
+      .auth-card-wrap{
+        display:grid;
+        place-items:center;
+        padding:40px 32px;
+      }
+      .auth-card{
+        width:min(100%,420px);
+        padding:32px;
+        border:1px solid var(--border);
+        border-radius:var(--radius-lg);
+        background:rgba(15,20,32,0.75);
+        backdrop-filter:blur(28px);
+        box-shadow:var(--shadow-lg), 0 0 0 1px rgba(255,255,255,0.05), inset 0 1px 0 rgba(255,255,255,0.1);
+      }
+      .auth-card h2{
+        margin:6px 0 8px;
+        font-size:23px;
+        font-weight:800;
+        letter-spacing:-.03em;
+      }
+      .auth-card>p{
+        margin:0 0 24px;
+        color:var(--muted);
+        font-size:13px;
+        line-height:1.55;
+      }
+      .tabs{
+        display:flex;
+        gap:3px;
+        margin-bottom:20px;
+        padding:3px;
+        border:1px solid var(--border);
+        border-radius:var(--radius-sm);
+        background:rgba(8,11,18,0.85);
+      }
+      .tab{
+        flex:1;
+        min-height:34px;
+        border-radius:4px;
+        color:var(--muted);
+        background:transparent;
+        font-size:11.5px;
+        font-weight:600;
+        transition:all .16s var(--ease);
+      }
+      .tab.active{
+        color:#fff;
+        background:var(--accentSoft);
+        box-shadow:0 0 12px -2px var(--accentGlow), inset 0 0 0 1px rgba(99,102,241,0.3);
+      }
+      .tab:hover:not(.active){
+        color:var(--text);
+        background:rgba(255,255,255,0.03);
+      }
+      .auth-form{display:grid;gap:14px}
+      label{
+        display:grid;
+        gap:6px;
+        color:var(--dim);
+        font:9.5px var(--mono);
+        font-weight:600;
+        letter-spacing:.05em;
+        text-transform:uppercase;
+      }
+      input,select{
+        width:100%;
+        height:40px;
+        padding:0 12px;
+        font-size:13px;
+      }
+      textarea{
+        width:100%;
+        min-height:148px;
+        padding:12px;
+        resize:vertical;
+        font-size:13px;
+        line-height:1.55;
+      }
+
+      /* Buttons - Modern AI glow and tactile depth */
+      .primary,.secondary,.icon-btn{
+        display:inline-flex;
+        align-items:center;
+        justify-content:center;
+        gap:8px;
+        min-height:36px;
+        border-radius:var(--radius-sm);
+        padding:0 14px;
+        font-size:12px;
+        font-weight:600;
+        transition:all .16s var(--ease);
+        white-space:nowrap;
+      }
+      .primary{
+        color:#fff;
+        border:1px solid rgba(255,255,255,0.18);
+        background:linear-gradient(135deg, #4f46e5 0%, #6366f1 50%, #7c3aed 100%);
+        box-shadow:0 2px 14px -2px rgba(99,102,241,0.5), inset 0 1px 0 rgba(255,255,255,0.25);
+      }
+      .primary:hover{
+        background:linear-gradient(135deg, #4338ca 0%, #4f46e5 50%, #6d28d9 100%);
+        box-shadow:0 4px 20px -2px rgba(99,102,241,0.65), inset 0 1px 0 rgba(255,255,255,0.35);
+        transform:translateY(-1px);
+      }
+      .primary:active{transform:translateY(0)}
+      .secondary,.icon-btn{
+        color:var(--text-secondary);
+        border:1px solid var(--border);
+        background:rgba(255,255,255,0.035);
+        backdrop-filter:blur(12px);
+        box-shadow:inset 0 1px 0 rgba(255,255,255,0.04);
+      }
+      .secondary:hover,.icon-btn:hover{
+        color:#fff;
+        border-color:rgba(255,255,255,0.15);
+        background:rgba(255,255,255,0.07);
+        transform:translateY(-1px);
+      }
+      .danger{
+        color:#fda4af;
+        border:1px solid rgba(244,63,94,0.3);
+        background:rgba(244,63,94,0.1);
+        backdrop-filter:blur(12px);
+      }
+      .danger:hover{
+        color:#ffe4e6;
+        border-color:rgba(244,63,94,0.55);
+        background:rgba(244,63,94,0.2);
+        box-shadow:0 0 16px -2px var(--roseGlow);
+        transform:translateY(-1px);
+      }
+      .form-note{
+        min-height:18px;
+        margin:0;
+        color:var(--muted);
+        font-size:11px;
+        line-height:1.5;
+      }
+      .form-note.error{color:#f87171}
+      .form-note.success{color:#34d399}
+      .auth-boundary{
+        margin-top:22px;
+        padding:12px 14px;
+        border:1px solid rgba(99,102,241,0.2);
+        border-left:3px solid var(--accent);
+        border-radius:var(--radius-sm);
+        background:rgba(99,102,241,0.06);
+        color:var(--muted);
+        font-size:11px;
+        line-height:1.55;
+      }
+      .auth-boundary b{color:#c7d2fe}
+
+      /* App Shell & Navigation */
+      .app-shell{
+        display:grid;
+        grid-template-columns:250px minmax(0,1fr);
+        height:100vh;
+      }
+      .sidebar{
+        display:flex;
+        flex-direction:column;
+        border-right:1px solid var(--border);
+        background:rgba(11,15,24,0.75);
+        backdrop-filter:blur(24px);
+      }
+      .sidebar .brand{
+        min-height:64px;
+        padding:0 20px;
+        border-bottom:1px solid var(--border);
+      }
+      .nav-section{padding:16px 10px 8px}
+      .nav-label{
+        padding:0 10px 8px;
+        color:var(--dim);
+        font:9px var(--mono);
+        font-weight:700;
+        letter-spacing:.08em;
+        text-transform:uppercase;
+      }
+      .nav-btn{
+        display:flex;
+        align-items:center;
+        gap:10px;
+        width:100%;
+        min-height:40px;
+        padding:0 12px;
+        border:1px solid transparent;
+        border-radius:var(--radius-sm);
+        color:var(--muted);
+        background:transparent;
+        text-align:left;
+        font-size:13px;
+        font-weight:500;
+        transition:all .16s var(--ease);
+      }
+      .nav-btn:hover{
+        color:var(--text);
+        background:rgba(255,255,255,0.04);
+      }
+      .nav-btn.active{
+        border-color:rgba(99,102,241,0.3);
+        color:#fff;
+        background:var(--accentSoft);
+        box-shadow:inset 0 0 0 1px rgba(99,102,241,0.25), 0 0 14px -2px var(--accentGlow);
+        font-weight:600;
+      }
+      .nav-ico{
+        width:16px;
+        font:14px var(--mono);
+        text-align:center;
+        color:var(--dim);
+      }
+      .nav-btn.active .nav-ico{color:var(--accent2)}
+      .nav-count{
+        margin-left:auto;
+        padding:2px 7px;
+        border:1px solid var(--border);
+        border-radius:var(--radius-full);
+        color:var(--dim);
+        background:rgba(0,0,0,0.2);
+        font:10px var(--mono);
+      }
+      .sidebar-bottom{
+        margin-top:auto;
+        padding:14px 16px;
+        border-top:1px solid var(--border);
+        background:rgba(7,9,14,0.4);
+      }
+      .identity{
+        display:flex;
+        gap:10px;
+        align-items:center;
+      }
+      .avatar{
+        display:grid;
+        place-items:center;
+        width:32px;
+        height:32px;
+        border:1px solid rgba(255,255,255,0.12);
+        border-radius:var(--radius-sm);
+        color:#fff;
+        background:linear-gradient(135deg, #3730a3 0%, #4338ca 100%);
+        font:11px/1 var(--mono);
+        font-weight:700;
+        box-shadow:inset 0 1px 0 rgba(255,255,255,0.2);
+      }
+      .identity b{
+        display:block;
+        max-width:150px;
+        overflow:hidden;
+        font-size:12px;
+        font-weight:600;
+        text-overflow:ellipsis;
+        white-space:nowrap;
+      }
+      .identity span{
+        display:block;
+        margin-top:2px;
+        color:var(--dim);
+        font:9.5px var(--mono);
+      }
+      .signout{
+        display:inline-flex;
+        align-items:center;
+        justify-content:center;
+        gap:8px;
+        width:100%;
+        min-height:34px;
+        margin-top:12px;
+        border:1px solid rgba(244,63,94,0.25);
+        border-radius:var(--radius-sm);
+        color:#fda4af;
+        background:var(--roseSoft);
+        font-size:11.5px;
+        font-weight:600;
+        transition:all .16s var(--ease);
+      }
+      .signout:hover{
+        color:#ffe4e6;
+        border-color:rgba(244,63,94,0.45);
+        background:rgba(244,63,94,0.2);
+        box-shadow:0 0 14px -2px var(--roseGlow);
+      }
+      .signout-btn{
+        color:#fda4af;
+        border-color:rgba(244,63,94,0.25);
+        background:var(--roseSoft);
+      }
+      .signout-btn:hover{
+        color:#ffe4e6;
+        border-color:rgba(244,63,94,0.45);
+        background:rgba(244,63,94,0.2);
+      }
+
+      /* Main Workspace View */
+      .main{
+        min-width:0;
+        overflow:auto;
+        background:var(--bg);
+        background-image:var(--bg-mesh);
+      }
+      .topbar{
+        position:sticky;
+        top:0;
+        z-index:10;
+        display:flex;
+        align-items:center;
+        justify-content:space-between;
+        min-height:64px;
+        padding:0 28px;
+        border-bottom:1px solid var(--border);
+        background:rgba(7,9,14,0.78);
+        backdrop-filter:blur(24px);
+      }
+      .crumb{
+        display:flex;
+        gap:8px;
+        align-items:center;
+        color:var(--muted);
+        font-size:12px;
+      }
+      .crumb b{color:var(--text);font-weight:600}
+      .crumb i{color:var(--dim);font-style:normal}
+      .top-actions{
+        display:flex;
+        gap:10px;
+        align-items:center;
+      }
+      .page{
+        display:none;
+        padding:28px;
+        max-width:1200px;
+        margin:0 auto;
+      }
+      .page.active{
+        display:block;
+        animation:fade .2s var(--ease);
+      }
+      @keyframes fade{
+        from{opacity:0;transform:translateY(6px)}
+        to{opacity:1;transform:none}
+      }
+      .page-head{
+        display:flex;
+        align-items:flex-start;
+        justify-content:space-between;
+        gap:16px;
+        margin-bottom:22px;
+      }
+      .page-head h1{
+        margin:4px 0 0;
+        font-size:26px;
+        font-weight:800;
+        letter-spacing:-.035em;
+      }
+      .page-head p{
+        max-width:640px;
+        margin:6px 0 0;
+        color:var(--muted);
+        font-size:13px;
+        line-height:1.6;
+      }
+
+      /* Status Strip */
+      .status-strip{
+        display:flex;
+        min-height:46px;
+        margin-bottom:20px;
+        overflow:auto;
+        border:1px solid var(--border);
+        border-radius:var(--radius-md);
+        background:var(--card);
+        backdrop-filter:blur(16px);
+        box-shadow:var(--shadow-sm), inset 0 1px 0 rgba(255,255,255,0.04);
+      }
+      .status-cell{
+        display:flex;
+        align-items:center;
+        gap:10px;
+        min-width:165px;
+        padding:0 16px;
+        border-right:1px solid var(--border);
+        white-space:nowrap;
+      }
+      .status-cell:last-child{border-right:0}
+      .status-k{
+        display:block;
+        color:var(--dim);
+        font:9px var(--mono);
+        font-weight:600;
+        letter-spacing:.06em;
+        text-transform:uppercase;
+      }
+      .status-v{
+        display:block;
+        max-width:170px;
+        overflow:hidden;
+        color:var(--text);
+        font-size:11.5px;
+        font-weight:600;
+        text-overflow:ellipsis;
+      }
+
+      /* Project Grid */
+      .project-grid{
+        display:grid;
+        grid-template-columns:repeat(auto-fill,minmax(290px,1fr));
+        gap:14px;
+      }
+      .project-row{
+        position:relative;
+        display:grid;
+        gap:14px;
+        min-height:180px;
+        padding:20px;
+        border:1px solid var(--border);
+        border-radius:var(--radius-md);
+        background:var(--card);
+        backdrop-filter:blur(16px);
+        cursor:pointer;
+        text-align:left;
+        box-shadow:var(--shadow-sm), inset 0 1px 0 rgba(255,255,255,0.06);
+        transition:all .18s var(--ease);
+      }
+      .project-row:hover{
+        border-color:var(--border-hover);
+        background:var(--card-hover);
+        transform:translateY(-2px);
+        box-shadow:var(--shadow-md), 0 0 24px -4px var(--accentGlow), inset 0 1px 0 rgba(255,255,255,0.1);
+      }
+      .project-row .row-top{
+        display:flex;
+        align-items:center;
+        justify-content:space-between;
+        gap:8px;
+      }
+      .project-row h2{
+        margin:8px 0 0;
+        font-size:16.5px;
+        font-weight:700;
+        letter-spacing:-.02em;
+      }
+      .project-row p{
+        margin:4px 0 0;
+        color:var(--muted);
+        font-size:12px;
+        line-height:1.55;
+      }
+      .role{
+        display:inline-flex;
+        width:fit-content;
+        padding:3px 8px;
+        border:1px solid rgba(99,102,241,0.3);
+        border-radius:var(--radius-full);
+        color:#c7d2fe;
+        background:var(--accentSoft);
+        font:9.5px var(--mono);
+        font-weight:600;
+        text-transform:uppercase;
+      }
+      .project-foot{
+        display:flex;
+        justify-content:space-between;
+        align-items:flex-end;
+        margin-top:auto;
+        color:var(--dim);
+        font:9.5px var(--mono);
+      }
+      .new-project{
+        display:grid;
+        place-items:center;
+        min-height:180px;
+        border:1px dashed rgba(255,255,255,0.14);
+        border-radius:var(--radius-md);
+        color:var(--muted);
+        background:rgba(255,255,255,0.015);
+        cursor:pointer;
+        text-align:center;
+        transition:all .18s var(--ease);
+      }
+      .new-project b{
+        display:block;
+        margin:8px 0 4px;
+        color:var(--text);
+        font-size:13px;
+        font-weight:600;
+      }
+      .new-project:hover{
+        border-color:var(--accent2);
+        color:#fff;
+        background:var(--accentSoft);
+        box-shadow:0 0 24px -4px var(--accentGlow);
+        transform:translateY(-2px);
+      }
+      .empty{
+        padding:42px 24px;
+        border:1px dashed var(--border);
+        border-radius:var(--radius-md);
+        color:var(--muted);
+        text-align:center;
+        background:rgba(0,0,0,0.15);
+      }
+      .empty b{
+        display:block;
+        margin-bottom:6px;
+        color:var(--text);
+        font-size:14px;
+        font-weight:600;
+      }
+      .empty p{margin:0;font-size:12px}
+
+      /* Workspace Panels */
+      .workspace-grid{
+        display:grid;
+        grid-template-columns:minmax(0,1fr) 330px;
+        gap:16px;
+      }
+      .panel{
+        min-width:0;
+        border:1px solid var(--border);
+        border-radius:var(--radius-md);
+        background:var(--card);
+        backdrop-filter:blur(16px);
+        box-shadow:var(--shadow-sm), inset 0 1px 0 rgba(255,255,255,0.05);
+      }
+      .panel-head{
+        display:flex;
+        align-items:center;
+        justify-content:space-between;
+        min-height:46px;
+        padding:0 18px;
+        border-bottom:1px solid var(--border);
+      }
+      .panel-head h2{
+        margin:0;
+        font-size:13px;
+        font-weight:700;
+      }
+      .panel-head span{
+        color:var(--dim);
+        font:9.5px var(--mono);
+      }
+      .objective{padding:18px}
+      .objective h2{
+        margin:4px 0 8px;
+        font-size:18px;
+        font-weight:700;
+        letter-spacing:-.02em;
+      }
+      .objective p{
+        margin:0;
+        color:var(--muted);
+        font-size:12px;
+        line-height:1.65;
+      }
+      .metric-grid{
+        display:grid;
+        grid-template-columns:1fr 1fr;
+        gap:1px;
+        background:var(--border);
+      }
+      .metric{
+        min-height:92px;
+        padding:16px;
+        background:var(--surface);
+      }
+      .metric b{
+        display:block;
+        margin:8px 0 2px;
+        font-size:26px;
+        font-weight:800;
+        letter-spacing:-.04em;
+        color:#fff;
+      }
+      .metric span{
+        color:var(--muted);
+        font-size:11px;
+      }
+      .activity{
+        padding:14px 18px;
+        border-bottom:1px solid var(--line2);
+      }
+      .activity:last-child{border-bottom:0}
+      .activity b{
+        display:block;
+        color:var(--text-secondary);
+        font-size:12px;
+        font-weight:600;
+      }
+      .activity p{
+        margin:3px 0 0;
+        color:var(--muted);
+        font-size:11px;
+        line-height:1.5;
+      }
+      .activity time{
+        display:block;
+        margin-top:5px;
+        color:var(--dim);
+        font:9.5px var(--mono);
+      }
+      .access-list{display:grid;gap:0}
+      .access-line{
+        display:flex;
+        gap:10px;
+        align-items:flex-start;
+        padding:14px 18px;
+        border-bottom:1px solid var(--line2);
+      }
+      .access-line:last-child{border-bottom:0}
+      .access-line b{
+        display:block;
+        font-size:12px;
+        font-weight:600;
+      }
+      .access-line p{
+        margin:3px 0 0;
+        color:var(--muted);
+        font-size:11px;
+        line-height:1.5;
+      }
+
+      /* Memory Explorer Tools */
+      .memory-tools{
+        display:grid;
+        grid-template-columns:minmax(200px,1fr) 140px auto;
+        gap:10px;
+        margin-bottom:14px;
+      }
+      .search{
+        display:flex;
+        align-items:center;
+        height:40px;
+        border:1px solid var(--border);
+        border-radius:var(--radius-sm);
+        background:var(--card);
+        backdrop-filter:blur(16px);
+      }
+      .search span{
+        padding:0 12px;
+        color:var(--dim);
+        font-family:var(--mono);
+        font-size:15px;
+      }
+      .search input{
+        height:38px;
+        padding:0 10px 0 0;
+        border:0;
+        background:transparent;
+        box-shadow:none;
+        font-size:13px;
+      }
+      .search input:focus{box-shadow:none}
+      .count{
+        display:flex;
+        align-items:center;
+        justify-content:center;
+        min-width:100px;
+        padding:0 12px;
+        border:1px solid var(--border);
+        border-radius:var(--radius-sm);
+        color:var(--muted);
+        background:var(--card);
+        backdrop-filter:blur(16px);
+        font:10px var(--mono);
+        font-weight:600;
+        white-space:nowrap;
+      }
+      .tagbar{
+        display:flex;
+        gap:6px;
+        margin-bottom:14px;
+        overflow:auto;
+        padding-bottom:4px;
+      }
+      .tag{
+        flex:0 0 auto;
+        min-height:30px;
+        padding:0 10px;
+        border:1px solid var(--border);
+        border-radius:var(--radius-full);
+        color:var(--muted);
+        background:var(--card);
+        font:10px var(--mono);
+        font-weight:500;
+        transition:all .14s var(--ease);
+      }
+      .tag.active{
+        border-color:rgba(99,102,241,0.4);
+        color:#fff;
+        background:var(--accentSoft);
+        box-shadow:0 0 12px -2px var(--accentGlow);
+      }
+      .tag:hover:not(.active){
+        color:var(--text);
+        border-color:rgba(255,255,255,0.18);
+        background:rgba(255,255,255,0.05);
+      }
+      .table{
+        border:1px solid var(--border);
+        border-radius:var(--radius-md);
+        overflow:hidden;
+        background:var(--card);
+        backdrop-filter:blur(16px);
+        box-shadow:var(--shadow-sm);
+      }
+      .table-head,.entry-row{
+        display:grid;
+        grid-template-columns:100px minmax(200px,1fr) 120px 115px 115px;
+        gap:12px;
+        align-items:center;
+      }
+      .table-head{
+        min-height:36px;
+        padding:0 16px;
+        border-bottom:1px solid var(--border);
+        color:var(--dim);
+        background:rgba(8,11,18,0.7);
+        font:9px var(--mono);
+        font-weight:700;
+        letter-spacing:.08em;
+        text-transform:uppercase;
+      }
+      .entry-row{
+        width:100%;
+        min-height:64px;
+        padding:10px 16px;
+        border-bottom:1px solid var(--line2);
+        color:inherit;
+        background:transparent;
+        text-align:left;
+        transition:all .14s var(--ease);
+      }
+      .entry-row:last-child{border-bottom:0}
+      .entry-row:hover,.entry-row.selected{
+        background:var(--card-hover);
+      }
+      .entry-row.selected{
+        box-shadow:inset 3px 0 var(--accent);
+        background:rgba(99,102,241,0.08);
+      }
+      .entry-tag{
+        display:inline-flex;
+        width:fit-content;
+        padding:3px 7px;
+        border:1px solid rgba(6,182,212,0.25);
+        border-radius:4px;
+        color:#a5f3fc;
+        background:var(--cyanSoft);
+        font:9px var(--mono);
+        font-weight:600;
+        text-transform:uppercase;
+      }
+      .entry-main{min-width:0}
+      .entry-main b{
+        display:block;
+        overflow:hidden;
+        color:var(--text);
+        font-size:12.5px;
+        font-weight:600;
+        text-overflow:ellipsis;
+        white-space:nowrap;
+      }
+      .entry-main span{
+        display:block;
+        overflow:hidden;
+        margin-top:3px;
+        color:var(--muted);
+        font-size:10px;
+        text-overflow:ellipsis;
+        white-space:nowrap;
+      }
+      .entry-meta{
+        color:var(--muted);
+        font:9.5px var(--mono);
+        text-transform:uppercase;
+      }
+      .entry-source,.entry-time{
+        overflow:hidden;
+        color:var(--muted);
+        font:9.5px var(--mono);
+        text-overflow:ellipsis;
+        white-space:nowrap;
+      }
+      .type-dot{
+        display:inline-block;
+        width:6px;
+        height:6px;
+        margin-right:6px;
+        border-radius:50%;
+        background:var(--cyan);
+        box-shadow:0 0 6px var(--cyan);
+      }
+      .result-success{color:#34d399}
+      .result-pending,.result-partial{color:#fbbf24}
+      .result-failed{color:#f87171}
+      .result-decided{color:#a5b4fc}
+
+      /* Write & Share Grids */
+      .write-grid{
+        display:grid;
+        grid-template-columns:minmax(0,1fr) 310px;
+        gap:16px;
+      }
+      .form-panel{padding:20px}
+      .form-grid{
+        display:grid;
+        grid-template-columns:1fr 1fr;
+        gap:12px;
+      }
+      .full{grid-column:1/-1}
+      .form-actions{
+        display:flex;
+        gap:10px;
+        align-items:center;
+        margin-top:16px;
+      }
+      .preview{
+        display:none;
+        margin-top:16px;
+        padding:16px;
+        border:1px dashed rgba(99,102,241,0.35);
+        border-radius:var(--radius-sm);
+        background:rgba(99,102,241,0.05);
+      }
+      .preview.show{display:block}
+      .preview h3{
+        margin:6px 0 10px;
+        font-size:14px;
+        font-weight:700;
+      }
+      .preview p{
+        margin:0;
+        color:var(--muted);
+        font-size:12px;
+        line-height:1.6;
+      }
+      .instruction{padding:18px}
+      .instruction h2{
+        margin:4px 0 10px;
+        font-size:15px;
+        font-weight:700;
+      }
+      .instruction p{
+        margin:0;
+        color:var(--muted);
+        font-size:11.5px;
+        line-height:1.65;
+      }
+      .rule{
+        display:grid;
+        grid-template-columns:22px 1fr;
+        gap:10px;
+        padding:12px 0;
+        border-bottom:1px solid var(--line2);
+      }
+      .rule:last-child{border-bottom:0}
+      .rule span{
+        color:var(--accent2);
+        font:11px var(--mono);
+        font-weight:700;
+      }
+      .rule b{
+        display:block;
+        font-size:11.5px;
+        font-weight:600;
+      }
+      .rule p{
+        margin:3px 0 0;
+        color:var(--muted);
+        font-size:11px;
+        line-height:1.5;
+      }
+
+      /* Share Links */
+      .share-url{
+        width:100%;
+        height:auto;
+        min-height:48px;
+        padding:12px;
+        overflow:auto;
+        border:1px solid rgba(99,102,241,0.3);
+        border-radius:var(--radius-sm);
+        color:#c7d2fe;
+        background:rgba(8,11,18,0.85);
+        font:11px/1.6 var(--mono);
+        word-break:break-all;
+      }
+      .share-list{display:grid}
+      .share-row{
+        display:grid;
+        grid-template-columns:minmax(0,1fr) auto;
+        gap:12px;
+        align-items:center;
+        padding:14px 18px;
+        border-bottom:1px solid var(--line2);
+      }
+      .share-row:last-child{border-bottom:0}
+      .share-row b{
+        display:block;
+        overflow:hidden;
+        font-size:12.5px;
+        font-weight:600;
+        text-overflow:ellipsis;
+        white-space:nowrap;
+      }
+      .share-row p{
+        margin:4px 0 0;
+        color:var(--muted);
+        font:10px var(--mono);
+        line-height:1.5;
+      }
+      .share-row .form-actions{margin:0}
+      .share-state{
+        display:inline-flex;
+        width:fit-content;
+        margin-top:6px;
+        padding:3px 7px;
+        border:1px solid rgba(16,185,129,0.3);
+        border-radius:4px;
+        color:#6ee7b7;
+        background:var(--greenSoft);
+        font:9px var(--mono);
+        font-weight:600;
+        text-transform:uppercase;
+      }
+      .share-state.revoked{
+        border-color:rgba(244,63,94,0.3);
+        color:#fda4af;
+        background:var(--roseSoft);
+      }
+
+      /* Inspector Drawer */
+      .inspector{
+        position:fixed;
+        top:0;
+        right:0;
+        bottom:0;
+        z-index:25;
+        display:flex;
+        flex-direction:column;
+        width:min(420px,100vw);
+        border-left:1px solid var(--border);
+        background:rgba(12,16,25,0.92);
+        backdrop-filter:blur(32px);
+        box-shadow:-24px 0 80px rgba(0,0,0,0.6);
+        transform:translateX(105%);
+        transition:transform .22s var(--ease);
+      }
+      .inspector.open{transform:none}
+      .inspect-head{
+        display:flex;
+        align-items:center;
+        justify-content:space-between;
+        min-height:64px;
+        padding:0 18px;
+        border-bottom:1px solid var(--border);
+      }
+      .inspect-head h2{
+        margin:4px 0 0;
+        font-size:14.5px;
+        font-weight:700;
+      }
+      .icon-btn{
+        width:34px;
+        height:34px;
+        padding:0;
+        font-size:17px;
+      }
+      .inspect-body{
+        flex:1;
+        overflow:auto;
+        padding:18px;
+      }
+      .inspect-body h3{
+        margin:0 0 14px;
+        font-size:15px;
+        font-weight:700;
+        line-height:1.45;
+      }
+      .inspect-content{
+        padding:14px;
+        border:1px solid var(--border);
+        border-radius:var(--radius-sm);
+        color:var(--text-secondary);
+        background:rgba(6,9,14,0.8);
+        font-size:12px;
+        line-height:1.7;
+        white-space:pre-wrap;
+      }
+      .inspect-meta{
+        display:grid;
+        margin-top:16px;
+        border-top:1px solid var(--border);
+      }
+      .inspect-meta div{
+        display:grid;
+        grid-template-columns:92px minmax(0,1fr);
+        gap:10px;
+        padding:10px 0;
+        border-bottom:1px solid var(--line2);
+      }
+      .inspect-meta span{
+        color:var(--dim);
+        font:9px var(--mono);
+        font-weight:600;
+        text-transform:uppercase;
+      }
+      .inspect-meta b{
+        overflow:hidden;
+        color:var(--muted);
+        font:10px var(--mono);
+        text-overflow:ellipsis;
+        white-space:nowrap;
+      }
+      .inspect-actions{
+        display:flex;
+        flex-wrap:wrap;
+        gap:8px;
+        margin-top:16px;
+      }
+      .danger-note{
+        margin-top:12px!important;
+        color:#fca5a5!important;
+      }
+
+      /* Modals & Backdrop */
+      .backdrop{
+        position:fixed;
+        inset:0;
+        z-index:20;
+        display:none;
+        background:rgba(0,0,0,0.65);
+        backdrop-filter:blur(8px);
+      }
+      .backdrop.open{display:block}
+      .modal{
+        position:fixed;
+        top:50%;
+        left:50%;
+        z-index:30;
+        width:min(490px,calc(100vw - 32px));
+        padding:24px;
+        border:1px solid var(--border);
+        border-radius:var(--radius-lg);
+        background:rgba(15,20,32,0.92);
+        backdrop-filter:blur(32px);
+        box-shadow:var(--shadow-lg), 0 0 0 1px rgba(255,255,255,0.06), inset 0 1px 0 rgba(255,255,255,0.12);
+        transform:translate(-50%,-45%) scale(.96);
+        opacity:0;
+        pointer-events:none;
+        transition:all .18s var(--ease);
+      }
+      .modal.open{
+        transform:translate(-50%,-50%) scale(1);
+        opacity:1;
+        pointer-events:auto;
+      }
+      .modal h2{
+        margin:6px 0 8px;
+        font-size:19px;
+        font-weight:800;
+        letter-spacing:-.02em;
+      }
+      .modal p{
+        margin:0;
+        color:var(--muted);
+        font-size:12.5px;
+        line-height:1.6;
+      }
+      .modal-actions{
+        display:flex;
+        justify-content:flex-end;
+        gap:10px;
+        margin-top:20px;
+      }
+      .toast{
+        position:fixed;
+        right:22px;
+        bottom:22px;
+        z-index:40;
+        max-width:380px;
+        padding:12px 16px;
+        border:1px solid var(--border);
+        border-radius:var(--radius-sm);
+        color:#fff;
+        background:rgba(18,24,38,0.95);
+        backdrop-filter:blur(20px);
+        box-shadow:var(--shadow-md), 0 0 20px -2px var(--accentGlow);
+        font-size:12px;
+        opacity:0;
+        transform:translateY(10px);
+        pointer-events:none;
+        transition:all .18s var(--ease);
+      }
+      .toast.show{
+        opacity:1;
+        transform:none;
+      }
+      .mobile-nav{display:none}
+
+      @media(max-width:780px){
+        .auth-shell{display:block}
+        .auth-note{min-height:auto;padding:22px 18px;border:0}
+        .auth-console{margin-top:24px}
+        .auth-console h1,.auth-console>p,.auth-principles{display:none}
+        .preauth-strip{grid-template-columns:1fr 1fr;border-right:0;border-left:0;border-radius:0}
+        .preauth-cell{min-height:46px;padding:10px}
+        .preauth-cell:nth-child(2){border-right:0}
+        .preauth-cell:nth-child(-n+2){border-bottom:1px solid var(--border)}
+        .auth-card-wrap{padding:24px 16px;min-height:calc(100vh - 145px)}
+        .app-shell{display:block;height:auto;min-height:100vh}
+        .sidebar{display:none}
+        .main{overflow:visible;padding-bottom:64px}
+        .topbar{min-height:56px;padding:0 16px}
+        .top-actions .secondary:not(.signout-btn){display:none}
+        .top-actions .signout-btn{display:inline-flex;padding:0 10px;min-height:32px;font-size:11px}
+        .page{padding:18px 14px}
+        .page-head{margin-bottom:16px}
+        .page-head h1{font-size:22px}
+        .page-head p{display:none}
+        .status-strip{margin:0 -14px 14px;border-right:0;border-left:0;border-radius:0}
+        .status-cell{min-width:150px}
+        .workspace-grid,.write-grid{grid-template-columns:1fr}
+        .memory-tools{grid-template-columns:minmax(0,1fr) 120px}
+        .count{grid-column:1/-1;justify-content:flex-start;min-height:32px}
+        .table-head{display:none}
+        .entry-row{grid-template-columns:70px minmax(0,1fr) 18px;min-height:72px;padding:10px}
+        .entry-row .entry-meta,.entry-row .entry-source,.entry-row .entry-time{display:none}
+        .entry-main b{white-space:normal;line-height:1.35}
+        .entry-main span{white-space:nowrap}
+        .entry-row:after{content:'›';color:var(--accent2);font-size:18px;text-align:right}
+        .entry-tag{font-size:8.5px}
+        .share-row{grid-template-columns:1fr}
+        .mobile-nav{
+          position:fixed;
+          right:0;
+          bottom:0;
+          left:0;
+          z-index:20;
+          display:grid;
+          grid-template-columns:repeat(5,1fr);
+          height:62px;
+          border-top:1px solid var(--border);
+          background:rgba(8,11,18,0.95);
+          backdrop-filter:blur(20px);
+        }
+        .mobile-nav button{
+          color:var(--muted);
+          background:transparent;
+          font-size:9.5px;
+        }
+        .mobile-nav button.active{color:var(--accent3)}
+        .mobile-nav b{display:block;margin-bottom:3px;font:14px var(--mono)}
+      }
+      @media(prefers-reduced-motion:reduce){
+        *,*:before,*:after{transition-duration:.001ms!important;animation-duration:.001ms!important}
+      }
     </style>
   </head>
   <body>
@@ -37,13 +1411,13 @@
 
     <section id="appView" class="app-shell hidden">
       <aside class="sidebar"><div class="brand"><span class="brand-mark">≡</span><div>AgentDock<small>PROJECT MEMORY · V2</small></div></div><div class="nav-section"><div class="nav-label">Workspace</div><button class="nav-btn active" type="button" data-page="projects"><span class="nav-ico">◫</span>Projects</button><button class="nav-btn" type="button" data-page="workspace"><span class="nav-ico">◌</span>Overview</button><button class="nav-btn" type="button" data-page="memory"><span class="nav-ico">≡</span>Memory<span class="nav-count" id="sideEntryCount">—</span></button><button class="nav-btn" type="button" data-page="write"><span class="nav-ico">＋</span>New entry</button></div><div class="nav-section"><div class="nav-label">Access</div><button class="nav-btn" type="button" data-page="share"><span class="nav-ico">↗</span>Share for AI</button><button class="nav-btn" type="button" data-page="access"><span class="nav-ico">◌</span>Project access</button></div><div class="sidebar-bottom"><div class="identity"><span class="avatar" id="avatar">U</span><div><b id="userEmail">—</b><span id="userRole">Authenticated session</span></div></div><button class="signout" id="signOut" type="button">↗ Sign out</button></div></aside>
-      <main class="main"><header class="topbar"><div class="crumb"><span>Projects</span><i>/</i><b id="crumb">Dashboard</b></div><div class="top-actions"><button class="secondary" id="refresh" type="button">↻ Refresh</button><button class="secondary" id="quickNew" type="button">＋ New entry</button></div></header>
+      <main class="main"><header class="topbar"><div class="crumb"><span>Projects</span><i>/</i><b id="crumb">Dashboard</b></div><div class="top-actions"><button class="secondary" id="refresh" type="button">↻ Refresh</button><button class="secondary" id="quickNew" type="button">＋ New entry</button><button class="secondary signout-btn" id="topSignOut" type="button" title="Sign out">↗ Sign out</button></div></header>
         <section id="projects" class="page active"><div class="page-head"><div><span class="eyebrow">Project dashboard</span><h1>Your Projects</h1><p>Only Projects where your signed-in account is a member appear here. The database enforces this boundary on every request.</p></div><button class="primary" id="openCreateProject" type="button">＋ Create Project</button></div><div class="status-strip"><div class="status-cell"><span class="dot green"></span><div><span class="status-k">Session</span><span class="status-v" id="sessionState">Authenticated</span></div></div><div class="status-cell"><div><span class="status-k">Projects visible</span><span class="status-v" id="projectCount">—</span></div></div><div class="status-cell"><div><span class="status-k">Legacy claim</span><span class="status-v" id="claimState">Checking…</span></div></div><div class="status-cell"><span class="dot accent"></span><div><span class="status-k">Access model</span><span class="status-v">owner / editor / viewer</span></div></div></div><div class="project-grid" id="projectGrid"></div></section>
-        <section id="workspace" class="page"><div class="page-head"><div><span class="eyebrow">Project workspace</span><h1 id="workspaceTitle">Select a Project</h1><p id="workspaceDesc">Project Memory is only loaded after the current User has a Project role.</p></div><button class="primary" id="workspaceNew" type="button">＋ New entry</button></div><div class="status-strip"><div class="status-cell"><span class="dot green"></span><div><span class="status-k">Project role</span><span class="status-v" id="workspaceRole">—</span></div></div><div class="status-cell"><div><span class="status-k">Memory entries</span><span class="status-v" id="workspaceEntries">—</span></div></div><div class="status-cell"><div><span class="status-k">Write permission</span><span class="status-v" id="writeState">—</span></div></div><div class="status-cell"><div><span class="status-k">Source</span><span class="status-v">Supabase RLS</span></div></div></div><div class="workspace-grid"><section class="panel"><div class="panel-head"><h2>Project state</h2><span id="projectSlug">—</span></div><div class="objective"><span class="eyebrow">Description</span><h2 id="objectiveTitle">No Project selected</h2><p id="objectiveDesc">Open a Project from the dashboard to load its Memory.</p></div><div class="metric-grid"><div class="metric"><span class="eyebrow">Entries</span><b id="metricEntries">—</b><span>available to this session</span></div><div class="metric"><span class="eyebrow">Tags</span><b id="metricTags">—</b><span>active workstreams</span></div><div class="metric"><span class="eyebrow">Success</span><b id="metricSuccess">—</b><span>confirmed evidence</span></div><div class="metric"><span class="eyebrow">Pending</span><b id="metricPending">—</b><span>open work</span></div></div></section><aside class="panel"><div class="panel-head"><h2>Recent evidence</h2><span>RLS</span></div><div id="recentList"><div class="activity"><b>No Project selected</b><p>Choose a Project from Dashboard.</p></div></div></aside></div></section>
+        <section id="workspace" class="page"><div class="page-head"><div><span class="eyebrow">Project workspace</span><h1 id="workspaceTitle">Select a Project</h1><p id="workspaceDesc">Project Memory is only loaded after the current User has a Project role.</p></div><div style="display:flex;gap:8px;align-items:center"><button class="danger secondary" id="deleteProjectBtn" type="button" style="display:none">Delete Project</button><button class="primary" id="workspaceNew" type="button">＋ New entry</button></div></div><div class="status-strip"><div class="status-cell"><span class="dot green"></span><div><span class="status-k">Project role</span><span class="status-v" id="workspaceRole">—</span></div></div><div class="status-cell"><div><span class="status-k">Memory entries</span><span class="status-v" id="workspaceEntries">—</span></div></div><div class="status-cell"><div><span class="status-k">Write permission</span><span class="status-v" id="writeState">—</span></div></div><div class="status-cell"><div><span class="status-k">Source</span><span class="status-v">Supabase RLS</span></div></div></div><div class="workspace-grid"><section class="panel"><div class="panel-head"><h2>Project state</h2><span id="projectSlug">—</span></div><div class="objective"><span class="eyebrow">Description</span><h2 id="objectiveTitle">No Project selected</h2><p id="objectiveDesc">Open a Project from the dashboard to load its Memory.</p></div><div class="metric-grid"><div class="metric"><span class="eyebrow">Entries</span><b id="metricEntries">—</b><span>available to this session</span></div><div class="metric"><span class="eyebrow">Tags</span><b id="metricTags">—</b><span>active workstreams</span></div><div class="metric"><span class="eyebrow">Success</span><b id="metricSuccess">—</b><span>confirmed evidence</span></div><div class="metric"><span class="eyebrow">Pending</span><b id="metricPending">—</b><span>open work</span></div></div></section><aside class="panel"><div class="panel-head"><h2>Recent evidence</h2><span>RLS</span></div><div id="recentList"><div class="activity"><b>No Project selected</b><p>Choose a Project from Dashboard.</p></div></div></aside></div></section>
         <section id="memory" class="page"><div class="page-head"><div><span class="eyebrow">Project memory</span><h1>Search, filter, inspect.</h1><p>All records below are scoped to the selected Project by RLS. Select any row to inspect provenance.</p></div><button class="primary" id="memoryNew" type="button">＋ New entry</button></div><div class="memory-tools"><div class="search"><span>⌕</span><input id="memorySearch" type="search" placeholder="Search content, tag, source or author…" /></div><select id="resultFilter"><option value="all">All results</option><option value="success">success</option><option value="pending">pending</option><option value="partial">partial</option><option value="failed">failed</option><option value="decided">decided</option></select><div class="count" id="memoryCount">0 records</div></div><div class="tagbar" id="tagbar"></div><div class="table"><div class="table-head"><span>Tag</span><span>Evidence</span><span>Type / Result</span><span>Source</span><span>Recorded</span></div><div id="entryRows"></div></div></section>
         <section id="share" class="page"><div class="page-head"><div><span class="eyebrow">AI connection</span><h1>Give an AI access to this Project.</h1><p>Create a Project-scoped connection. Choose read-only context or explicit write permission; the AI never receives your Login or direct Supabase access.</p></div><button class="primary" id="openShareCreate" type="button">＋ Create AI connection</button></div><div class="status-strip"><div class="status-cell"><span class="dot accent"></span><div><span class="status-k">Project</span><span class="status-v" id="shareProject">—</span></div></div><div class="status-cell"><div><span class="status-k">Connection scopes</span><span class="status-v">read / read_write</span></div></div><div class="status-cell"><div><span class="status-k">Owner control</span><span class="status-v" id="shareRole">—</span></div></div><div class="status-cell"><div><span class="status-k">Gateway</span><span class="status-v">agentdock-share-v4</span></div></div></div><div class="workspace-grid"><section class="panel"><div class="panel-head"><h2>Share links</h2><span id="shareCount">—</span></div><div id="newShareLink" class="hidden" style="padding:13px;border-bottom:1px solid var(--line)"><span class="eyebrow">Copy now · raw token is not stored in the browser after refresh</span><div id="newShareUrl" class="share-url" style="margin-top:8px"></div><div class="form-actions"><button class="primary" id="copyNewShare" type="button">Copy link</button><button class="secondary" id="dismissNewShare" type="button">Dismiss</button></div></div><div id="shareList" class="share-list"></div></section><aside class="panel instruction"><span class="eyebrow">Safety boundary</span><h2>AI gets context, not control.</h2><p>Only an owner can create or revoke an AI connection. The token is stored as a SHA-256 hash; the raw link appears once at creation. Revoke a write-enabled connection immediately if it is exposed.</p><div class="rule"><span>01</span><div><b>Create</b><p>Owner generates a Project-scoped read token.</p></div></div><div class="rule"><span>02</span><div><b>Copy</b><p>Send the URL to another AI as its Project context source.</p></div></div><div class="rule"><span>03</span><div><b>Revoke</b><p>Owner disables a link without changing Project Memory.</p></div></div></aside></div></section>
         <section id="write" class="page"><div class="page-head"><div><span class="eyebrow">Confirm & save</span><h1 id="entryFormHeading">Create Project Memory entry</h1><p>Follow the baseline workflow: fill structured fields, preview the evidence, then explicitly confirm the write to Supabase.</p></div></div><div class="write-grid"><section class="panel form-panel"><form id="entryForm"><div class="form-grid"><label>Tag<input id="entryTag" required maxlength="80" placeholder="frontend" /></label><label>Created by<input id="entryAuthor" required maxlength="120" placeholder="User name or AI name" /></label><label>Type<select id="entryType"><option value="action">action</option><option value="decision">decision</option><option value="finding">finding</option><option value="state">state</option></select></label><label>Result<select id="entryResult"><option value="pending">pending</option><option value="success">success</option><option value="partial">partial</option><option value="failed">failed</option><option value="decided">decided</option></select></label><label>Source type<select id="entrySourceType"><option value="direct">direct</option><option value="external_ai">external_ai</option><option value="user_note">user_note</option><option value="imported">imported</option><option value="other">other</option></select></label><label>Source name<input id="entrySourceName" maxlength="200" placeholder="Session, tool or person" /></label><label class="full">Evidence<textarea id="entryContent" required placeholder="What happened? What is confirmed, pending or failed? What should the next AI know?"></textarea></label></div><div class="form-actions"><button class="primary" id="previewEntry" type="button">Preview entry</button><button class="secondary" type="reset">Reset</button></div><p class="form-note" id="entryNote"></p></form><div class="preview" id="entryPreview"><span class="eyebrow">Step 2 · review before write</span><h3 id="previewTitle">Entry preview</h3><p id="previewContent"></p></div></section><aside class="panel instruction"><span class="eyebrow">Write boundary</span><h2>Only owner/editor can save.</h2><p>A confirm request includes your Supabase session. The database independently checks your Project role before allowing the entry to be inserted.</p><div class="rule"><span>01</span><div><b>Form</b><p>Capture structured evidence and provenance.</p></div></div><div class="rule"><span>02</span><div><b>Preview</b><p>Review exactly what will be persisted.</p></div></div><div class="rule"><span>03</span><div><b>Confirm & save</b><p>RLS accepts the write only for owner/editor.</p></div></div></aside></div></section>
-        <section id="access" class="page"><div class="page-head"><div><span class="eyebrow">Project access</span><h1>Who can operate this Project?</h1><p>Roles are enforced in the database, not only hidden in the interface.</p></div></div><div class="workspace-grid"><section class="panel"><div class="panel-head"><h2>Current membership</h2><span id="memberCount">—</span></div><div id="memberList" class="access-list"><div class="access-line"><span class="dot"></span><div><b>No Project selected</b><p>Open a Project to inspect the members visible to your role.</p></div></div></div></section><aside class="panel instruction"><span class="eyebrow">Role rules</span><h2>Three clear boundaries</h2><div class="rule"><span>O</span><div><b>Owner</b><p>Manage Project, members and all entries.</p></div></div><div class="rule"><span>E</span><div><b>Editor</b><p>Read and create/update Project Memory.</p></div></div><div class="rule"><span>V</span><div><b>Viewer</b><p>Read Project and Memory only.</p></div></div><p style="margin-top:13px">Member invitation UI is deliberately deferred until an authenticated invite workflow is added; it must not expose another User's identity or bypass RLS.</p></aside></div></section>
+        <section id="access" class="page"><div class="page-head"><div><span class="eyebrow">Project access</span><h1>Who can operate this Project?</h1><p>Roles are enforced in the database, not only hidden in the interface.</p></div></div><div class="workspace-grid"><section class="panel"><div class="panel-head"><h2>Current membership</h2><span id="memberCount">—</span></div><div id="memberList" class="access-list"><div class="access-line"><span class="dot"></span><div><b>No Project selected</b><p>Open a Project to inspect the members visible to your role.</p></div></div></div></section><aside class="panel instruction"><span class="eyebrow">Role rules</span><h2>Three clear boundaries</h2><div class="rule"><span>O</span><div><b>Owner</b><p>Manage Project, members and all entries.</p></div></div><div class="rule"><span>E</span><div><b>Editor</b><p>Read and create/update Project Memory.</p></div></div><div class="rule"><span>V</span><div><b>Viewer</b><p>Read Project and Memory only.</p></div></div><div id="ownerDangerZone" class="hidden" style="margin-top:16px;padding-top:14px;border-top:1px solid var(--line2)"><span class="eyebrow" style="color:#ff9bad">Danger zone · Owner</span><h3 style="margin:4px 0 6px;font-size:12px;color:#ff9bad">Delete Project</h3><p style="margin:0 0 10px;color:var(--muted);font-size:10px;line-height:1.5">Permanently remove this Project along with its entries, members, and AI tokens.</p><button class="danger secondary" id="deleteProjectAccessBtn" type="button" style="width:100%">Delete Project</button></div><p style="margin-top:13px">Member invitation UI is deliberately deferred until an authenticated invite workflow is added; it must not expose another User's identity or bypass RLS.</p></aside></div></section>
       </main>
       <nav class="mobile-nav"><button class="active" type="button" data-page="projects"><b>◫</b>Projects</button><button type="button" data-page="workspace"><b>◌</b>Overview</button><button type="button" data-page="memory"><b>≡</b>Memory</button><button type="button" data-page="share"><b>↗</b>Share</button><button type="button" data-page="write"><b>＋</b>Write</button></nav>
     </section>
@@ -51,6 +1425,7 @@
     <div class="modal" id="confirmModal"><span class="eyebrow">Step 3 · permanent action</span><h2>Confirm & save this entry?</h2><p>The entry will be written to the selected Project through your authenticated Supabase session. Owner/editor permission is checked again by RLS.</p><div class="modal-actions"><button class="secondary" id="cancelConfirm" type="button">Cancel</button><button class="primary" id="confirmSave" type="button">Confirm & save</button></div></div>
     <div class="modal" id="closeDecisionModal"><span class="eyebrow">Update decision lifecycle</span><h2>Close this decision?</h2><p>The entry will remain in Project Memory, but its result becomes <b>decided</b>. It will no longer be presented to future AI sessions as an open decision.</p><div class="modal-actions"><button class="secondary" id="cancelCloseDecision" type="button">Cancel</button><button class="primary" id="confirmCloseDecision" type="button">Close decision</button></div></div>
     <div class="modal" id="entryDeleteModal"><span class="eyebrow">Permanent deletion · Owner only</span><h2>Delete this entry permanently?</h2><p>This removes the entry from Project Memory and future AI context. Prefer editing or closing a decision if the historical record should remain available.</p><label style="margin-top:15px">Type DELETE to confirm<input id="deleteConfirmText" maxlength="6" autocomplete="off" placeholder="DELETE" /></label><p class="form-note danger-note" id="deleteEntryNote"></p><div class="modal-actions"><button class="secondary" id="cancelEntryDelete" type="button">Cancel</button><button class="danger secondary" id="confirmEntryDelete" type="button">Delete permanently</button></div></div>
+    <div class="modal" id="projectDeleteModal"><span class="eyebrow">Permanent deletion · Owner only</span><h2 id="projectDeleteTitle">Delete Project permanently?</h2><p>This will permanently remove the Project, its Project Memory entries, member associations, and AI connection tokens. This action cannot be undone.</p><label style="margin-top:15px">Type DELETE to confirm<input id="deleteProjectConfirmText" maxlength="6" autocomplete="off" placeholder="DELETE" /></label><p class="form-note danger-note" id="deleteProjectNote"></p><div class="modal-actions"><button class="secondary" id="cancelProjectDelete" type="button">Cancel</button><button class="danger secondary" id="confirmProjectDelete" type="button">Delete permanently</button></div></div>
     <div class="modal" id="projectModal"><span class="eyebrow">New Project</span><h2>Create a Project</h2><p>Your account becomes owner automatically when the Project is created.</p><form id="projectForm" class="auth-form" style="margin-top:15px"><label>Project name<input id="newProjectName" required maxlength="120" placeholder="Research workspace" /></label><label>Slug<input id="newProjectSlug" required maxlength="80" pattern="[a-z0-9-]+" placeholder="research-workspace" /></label><label>Description<textarea id="newProjectDesc" maxlength="500" placeholder="What is this Project for?"></textarea></label><p class="form-note" id="projectNote"></p><div class="modal-actions"><button class="secondary" id="cancelProject" type="button">Cancel</button><button class="primary" type="submit">Create Project</button></div></form></div>
     <div class="modal" id="shareCreateModal"><span class="eyebrow">New AI connection</span><h2>Give an AI Project access</h2><p>Create a scoped token for this Project. <b>read</b> lets the AI read context; <b>read_write</b> lets an AI with HTTP/tool execution add Memory entries. The raw link is displayed once.</p><form id="shareCreateForm" class="auth-form" style="margin-top:15px"><label>Connection name<input id="shareName" required maxlength="120" value="AI handoff" /></label><label>Permission<select id="shareScope"><option value="read">Read-only — AI can read Project Memory</option><option value="read_write">Read + write — AI may add Memory entries</option></select></label><p class="form-note" id="shareCreateNote">Only choose read_write for an AI you trust. The AI still needs HTTP/tool execution to write.</p><div class="modal-actions"><button class="secondary" id="cancelShareCreate" type="button">Cancel</button><button class="primary" type="submit">Create connection</button></div></form></div>
     <div class="modal" id="shareRevokeModal"><span class="eyebrow">Permanent access change</span><h2>Revoke this share link?</h2><p>The receiving AI will no longer be able to use this token. Project Memory and every other link remain unchanged.</p><div class="modal-actions"><button class="secondary" id="cancelShareRevoke" type="button">Cancel</button><button class="primary" id="confirmShareRevoke" type="button">Revoke link</button></div></div>
@@ -64,7 +1439,7 @@
       const LEGACY_PROJECT_SLUG = 'agentdock';
       const SHARE_GATEWAY_URL = 'https://agentdock-e4u.pages.dev/memory';
       const supabase = createClient(SUPABASE_URL, SUPABASE_KEY, { auth: { persistSession: true, autoRefreshToken: true, detectSessionInUrl: true } });
-      const state = { session: null, user: null, projects: [], roles: new Map(), project: null, entries: [], members: [], tokens: [], lastShareUrl: '', pendingRevokeId: null, pendingEntryId: null, pendingDeleteId: null, editEntryId: null, tag: 'all', result: 'all', query: '', selectedId: null, authMode: 'signin' };
+      const state = { session: null, user: null, projects: [], roles: new Map(), project: null, entries: [], members: [], tokens: [], lastShareUrl: '', pendingRevokeId: null, pendingEntryId: null, pendingDeleteId: null, pendingDeleteProjectId: null, editEntryId: null, tag: 'all', result: 'all', query: '', selectedId: null, authMode: 'signin' };
       const $ = (selector) => document.querySelector(selector); const $$ = (selector) => [...document.querySelectorAll(selector)];
       const esc = (value) => { const node=document.createElement('span'); node.textContent=String(value ?? ''); return node.innerHTML; };
       const norm = (value) => String(value ?? '').toLocaleLowerCase('vi').normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/đ/g,'d');
@@ -83,15 +1458,16 @@
       function renderProjects(){$('#projectCount').textContent=`${state.projects.length} Project${state.projects.length===1?'':'s'}`;const grid=$('#projectGrid');if(!state.projects.length){grid.innerHTML=`<div class="empty"><b>No visible Projects yet</b><p>If you signed in as the owner email, use Refresh. Otherwise create a new Project or ask an owner to add you.</p></div><button class="new-project" id="emptyCreate" type="button"><span style="font-size:18px">＋</span><b>Create first Project</b><span>your account becomes owner</span></button>`;$('#emptyCreate').onclick=()=>openModal('projectModal');return}grid.innerHTML=state.projects.map(project=>`<button class="project-row" type="button" data-project="${esc(project.id)}"><div class="row-top"><span class="role">${esc(state.roles.get(project.id)||'member')}</span><span class="eyebrow">${esc(project.slug)}</span></div><div><h2>${esc(project.name)}</h2><p>${esc(project.description||'No description recorded.')}</p></div><div class="project-foot"><span>Updated ${esc(stamp(project.updated_at))}</span><span>Open →</span></div></button>`).join('')+`<button class="new-project" id="gridCreate" type="button"><span style="font-size:18px">＋</span><b>New Project</b><span>owner assigned automatically</span></button>`;$$('[data-project]').forEach(button=>button.addEventListener('click',()=>openProject(button.dataset.project)));$('#gridCreate').onclick=()=>openModal('projectModal')}
       async function openProject(id,navigate=true){const project=state.projects.find(item=>item.id===id);if(!project)return;state.project=project;state.selectedId=null;state.query='';state.tag='all';state.result='all';$('#workspaceTitle').textContent=project.name;$('#workspaceDesc').textContent=project.description||'No description recorded.';$('#objectiveTitle').textContent=project.name;$('#objectiveDesc').textContent=project.description||'No description recorded.';$('#projectSlug').textContent=project.slug;const role=state.roles.get(id)||'viewer';$('#workspaceRole').textContent=role;$('#userRole').textContent=`${role} · ${project.name}`;$('#writeState').textContent=['owner','editor'].includes(role)?'Allowed':'Read-only';await loadProjectData();if(navigate)showPage('workspace')}
       async function loadProjectData(){if(!state.project)return;const {data:entries,error}=await supabase.from('entries').select('id,project_id,tag,type,result,content,created_by,source_type,source_name,created_at,updated_at').eq('project_id',state.project.id).order('created_at',{ascending:false});if(error)throw error;state.entries=entries||[];const {data:members,error:memberError}=await supabase.from('project_members').select('project_id,user_id,role,created_at').eq('project_id',state.project.id).order('created_at',{ascending:true});if(memberError)throw memberError;state.members=members||[];const {data:tokens,error:tokenError}=await supabase.from('project_access_tokens').select('id,project_id,name,scope,created_at,last_used_at,revoked_at').eq('project_id',state.project.id).order('created_at',{ascending:false});if(tokenError)throw tokenError;state.tokens=tokens||[];state.lastShareUrl='';renderWorkspace();renderMemory();renderMembers();renderShare()}
-      function renderWorkspace(){const total=state.entries.length,tags=new Set(state.entries.map(e=>tagKey(e.tag))).size,success=state.entries.filter(e=>e.result==='success').length,pending=state.entries.filter(e=>['pending','partial'].includes(e.result)).length;$('#sideEntryCount').textContent=total;$('#workspaceEntries').textContent=`${total} indexed`;$('#metricEntries').textContent=total;$('#metricTags').textContent=tags;$('#metricSuccess').textContent=success;$('#metricPending').textContent=pending;const recent=state.entries.slice(0,4);$('#recentList').innerHTML=recent.length?recent.map(entry=>`<div class="activity"><b>${esc(short(entry.content,72))}</b><p>${esc(tagLabel(entry.tag))} · ${esc(entry.type)} · ${esc(entry.result)}</p><time>${esc(stamp(entry.created_at))}</time></div>`).join(''):'<div class="activity"><b>No Project Memory yet</b><p>Owner or editor can create the first entry.</p></div>'}
+      function renderWorkspace(){const total=state.entries.length,tags=new Set(state.entries.map(e=>tagKey(e.tag))).size,success=state.entries.filter(e=>e.result==='success').length,pending=state.entries.filter(e=>['pending','partial'].includes(e.result)).length;$('#sideEntryCount').textContent=total;$('#workspaceEntries').textContent=`${total} indexed`;$('#metricEntries').textContent=total;$('#metricTags').textContent=tags;$('#metricSuccess').textContent=success;$('#metricPending').textContent=pending;const isOwner=canDeleteProject();if($('#deleteProjectBtn'))$('#deleteProjectBtn').style.display=isOwner?'inline-flex':'none';if($('#ownerDangerZone'))$('#ownerDangerZone').classList.toggle('hidden',!isOwner);const recent=state.entries.slice(0,4);$('#recentList').innerHTML=recent.length?recent.map(entry=>`<div class="activity"><b>${esc(short(entry.content,72))}</b><p>${esc(tagLabel(entry.tag))} · ${esc(entry.type)} · ${esc(entry.result)}</p><time>${esc(stamp(entry.created_at))}</time></div>`).join(''):'<div class="activity"><b>No Project Memory yet</b><p>Owner or editor can create the first entry.</p></div>'}
       function filteredEntries(){const query=norm(state.query);return state.entries.filter(entry=>(state.tag==='all'||tagKey(entry.tag)===state.tag)&&(state.result==='all'||entry.result===state.result)&&(!query||[entry.tag,entry.type,entry.result,entry.content,entry.created_by,entry.source_type,entry.source_name].map(norm).join(' ').includes(query)))}
       function renderMemory(){const tags=[...new Set(state.entries.map(entry=>tagKey(entry.tag)))].sort();$('#tagbar').innerHTML=[`<button class="tag ${state.tag==='all'?'active':''}" type="button" data-tag="all">All ${state.entries.length}</button>`,...tags.map(tag=>`<button class="tag ${state.tag===tag?'active':''}" type="button" data-tag="${esc(tag)}">${esc(tagLabel(tag))} ${state.entries.filter(entry=>tagKey(entry.tag)===tag).length}</button>`)].join('');$$('[data-tag]').forEach(button=>button.addEventListener('click',()=>{state.tag=button.dataset.tag;renderMemory()}));const visible=filteredEntries();$('#memoryCount').textContent=`${visible.length} / ${state.entries.length} records`;const rows=$('#entryRows');if(!visible.length){rows.innerHTML='<div class="empty"><b>No matching Project Memory</b><p>Change the keyword or filter.</p></div>';return}rows.innerHTML=visible.map(entry=>`<button class="entry-row ${entry.id===state.selectedId?'selected':''}" type="button" data-entry="${esc(entry.id)}"><span class="entry-tag">${esc(tagLabel(entry.tag))}</span><span class="entry-main"><b>${esc(short(entry.content))}</b><span>${esc(entry.created_by)} · ${esc(entry.source_type)}</span></span><span class="entry-meta"><span class="type-dot"></span>${esc(entry.type)}<br><span class="result-${esc(entry.result)}">${esc(entry.result)}</span></span><span class="entry-source">${esc(entry.source_name||'—')}</span><span class="entry-time">${esc(stamp(entry.created_at))}</span></button>`).join('');$$('[data-entry]').forEach(button=>button.addEventListener('click',()=>inspectEntry(button.dataset.entry)))}
       function canManageEntries(){return ['owner','editor'].includes(state.roles.get(state.project?.id))}
       function canDeleteEntries(){return state.roles.get(state.project?.id)==='owner'}
+      function canDeleteProject(){return state.roles.get(state.project?.id)==='owner'}
       function isOpenItem(entry){return ['pending','partial','failed'].includes(entry?.result)}
       function closeItemLabel(entry){return entry?.type==='decision'?'Close decision':'Mark resolved'}
       function inspectEntry(id){const entry=state.entries.find(item=>item.id===id);if(!entry)return;state.selectedId=id;renderMemory();const updated=entry.updated_at&&entry.updated_at!==entry.created_at?`<div><span>Updated</span><b>${esc(new Date(entry.updated_at).toISOString())}</b></div>`:'';const actions=[`<button class="secondary" id="copyEvidence" type="button">Copy evidence</button>`,`<button class="secondary" id="draftFromEntry" type="button">Use in draft</button>`];if(canManageEntries())actions.push(`<button class="secondary" id="editEntry" type="button">Edit entry</button>`);if(isOpenItem(entry)&&canManageEntries())actions.push(`<button class="primary" id="closeItem" type="button">${closeItemLabel(entry)}</button>`);if(canDeleteEntries())actions.push(`<button class="danger secondary" id="deleteEntry" type="button">Delete permanently</button>`);$('#inspectHeading').textContent=`${tagLabel(entry.tag)} · ${entry.result}`;$('#inspectBody').innerHTML=`<h3>${esc(short(entry.content,150))}</h3><div class="inspect-content">${esc(entry.content)}</div><div class="inspect-meta"><div><span>Type</span><b>${esc(entry.type)}</b></div><div><span>Result</span><b>${esc(entry.result)}</b></div><div><span>Created by</span><b>${esc(entry.created_by)}</b></div><div><span>Source</span><b>${esc(entry.source_type)} · ${esc(entry.source_name||'—')}</b></div><div><span>Recorded</span><b>${esc(new Date(entry.created_at).toISOString())}</b></div>${updated}</div><div class="inspect-actions">${actions.join('')}</div>`;$('#backdrop').classList.add('open');$('#inspector').classList.add('open');$('#copyEvidence').onclick=async()=>{try{await navigator.clipboard.writeText(entry.content);note('Evidence copied.')}catch{note('Copy failed. Select the text manually.')}};$('#draftFromEntry').onclick=()=>{fillDraft(entry);closeModals();showPage('write')};const edit=$('#editEntry');if(edit)edit.onclick=()=>startEntryEdit(entry.id);const close=$('#closeItem');if(close)close.onclick=()=>requestCloseItem(entry.id);const remove=$('#deleteEntry');if(remove)remove.onclick=()=>requestEntryDelete(entry.id)}
-      function renderMembers(){const list=$('#memberList');$('#memberCount').textContent=`${state.members.length} member${state.members.length===1?'':'s'}`;list.innerHTML=state.members.length?state.members.map(member=>`<div class="access-line"><span class="dot ${member.role==='owner'?'accent':member.role==='editor'?'green':''}"></span><div><b>${member.user_id===state.user?.id?'You':member.user_id}</b><p><span class="role">${esc(member.role)}</span> · joined ${esc(stamp(member.created_at))}</p></div></div>`).join(''):'<div class="access-line"><span class="dot"></span><div><b>No membership visible</b><p>Open a Project after signing in.</p></div></div>'}
+      function renderMembers(){const list=$('#memberList');$('#memberCount').textContent=`${state.members.length} member${state.members.length===1?'':'s'}`;const isOwner=canDeleteProject();if($('#ownerDangerZone'))$('#ownerDangerZone').classList.toggle('hidden',!isOwner);list.innerHTML=state.members.length?state.members.map(member=>`<div class="access-line"><span class="dot ${member.role==='owner'?'accent':member.role==='editor'?'green':''}"></span><div><b>${member.user_id===state.user?.id?'You':member.user_id}</b><p><span class="role">${esc(member.role)}</span> · joined ${esc(stamp(member.created_at))}</p></div></div>`).join(''):'<div class="access-line"><span class="dot"></span><div><b>No membership visible</b><p>Open a Project after signing in.</p></div></div>'}
       function canManageShare(){return state.roles.get(state.project?.id)==='owner'}
       function scopeLabel(scope){return scope==='read_write'?'read_write · can add Memory':'read · read-only'}
       function renderShare(){const hasProject=Boolean(state.project),owner=canManageShare();$('#shareProject').textContent=hasProject?state.project.name:'No Project';$('#shareRole').textContent=owner?'Owner · can manage':hasProject?'Read-only role':'No Project';$('#openShareCreate').disabled=!owner;$('#shareCount').textContent=owner?`${state.tokens.length} link${state.tokens.length===1?'':'s'}`:'Owner only';const fresh=$('#newShareLink');fresh.classList.toggle('hidden',!state.lastShareUrl);if(state.lastShareUrl)$('#newShareUrl').textContent=state.lastShareUrl;const list=$('#shareList');if(!hasProject){list.innerHTML='<div class="empty"><b>No Project selected</b><p>Choose a Project before creating an AI handoff.</p></div>';return}if(!owner){list.innerHTML='<div class="empty"><b>Share links are owner-only</b><p>Ask the Project owner to create a read-only handoff link for another AI.</p></div>';return}list.innerHTML=state.tokens.length?state.tokens.map(token=>`<div class="share-row"><div><b>${esc(token.name)}</b><p>scope: ${esc(scopeLabel(token.scope))} · created ${esc(stamp(token.created_at))}${token.last_used_at?` · last used ${esc(stamp(token.last_used_at))}`:' · not used yet'}</p><span class="share-state ${token.revoked_at?'revoked':''}">${token.revoked_at?'revoked':'active'}</span></div><div class="form-actions">${token.revoked_at?'':`<button class="secondary" type="button" data-revoke-token="${esc(token.id)}">Revoke</button>`}</div></div>`).join(''):'<div class="empty"><b>No share links yet</b><p>Create a read-only or read/write connection when another AI needs this Project.</p></div>';$$('[data-revoke-token]').forEach(button=>button.addEventListener('click',()=>{state.pendingRevokeId=button.dataset.revokeToken;openModal('shareRevokeModal')}))}
@@ -167,10 +1543,12 @@
       async function confirmCloseDecision(){const id=state.pendingEntryId,entry=state.entries.find(item=>item.id===id),button=$('#confirmCloseDecision');if(!id||!isOpenItem(entry)||!canManageEntries())return;const label=closeItemLabel(entry);button.disabled=true;button.textContent='Saving…';try{const {data,error}=await supabase.from('entries').update({result:'decided',updated_at:new Date().toISOString()}).eq('id',id).eq('project_id',state.project.id).select('id,project_id,tag,type,result,content,created_by,source_type,source_name,created_at,updated_at').single();if(error)throw error;const index=state.entries.findIndex(item=>item.id===id);if(index>=0)state.entries[index]=data;state.pendingEntryId=null;closeModals();renderWorkspace();renderMemory();note(entry.type==='decision'?'Decision closed. It will no longer appear as open work.':'Open Item resolved. It will no longer appear as open work.');inspectEntry(data.id)}catch(error){note(error.message||'Could not resolve this Open Item.')}finally{button.disabled=false;button.textContent=label}}
       function requestEntryDelete(id){if(!canDeleteEntries()||!state.entries.some(item=>item.id===id)){note('Only the Project owner can delete an entry.');return}state.pendingDeleteId=id;$('#deleteConfirmText').value='';formNote($('#deleteEntryNote'),'Type DELETE to enable this permanent action.');openModal('entryDeleteModal')}
       async function confirmEntryDelete(){const id=state.pendingDeleteId,button=$('#confirmEntryDelete');if(!id||!canDeleteEntries())return;if($('#deleteConfirmText').value.trim()!=='DELETE'){formNote($('#deleteEntryNote'),'Enter DELETE exactly to confirm permanent deletion.','error');return}button.disabled=true;button.textContent='Deleting…';try{const {error}=await supabase.from('entries').delete().eq('id',id).eq('project_id',state.project.id);if(error)throw error;state.entries=state.entries.filter(item=>item.id!==id);state.selectedId=null;state.pendingDeleteId=null;closeModals();renderWorkspace();renderMemory();note('Entry permanently deleted from Project Memory.')}catch(error){formNote($('#deleteEntryNote'),error.message||'Could not delete this entry.','error')}finally{button.disabled=false;button.textContent='Delete permanently'}}
+      function requestProjectDelete(id){const targetId=id||state.project?.id;const project=state.projects.find(item=>item.id===targetId);if(!project||state.roles.get(project.id)!=='owner'){note('Only the Project owner can delete this Project.');return}state.pendingDeleteProjectId=project.id;$('#projectDeleteTitle').textContent=`Delete ${project.name} permanently?`;$('#deleteProjectConfirmText').value='';formNote($('#deleteProjectNote'),'Type DELETE to enable this permanent action.');openModal('projectDeleteModal')}
+      async function confirmProjectDelete(){const id=state.pendingDeleteProjectId||state.project?.id;const button=$('#confirmProjectDelete');if(!id)return;const project=state.projects.find(item=>item.id===id);if(!project||state.roles.get(id)!=='owner'){note('Only the Project owner can delete this Project.');return}if($('#deleteProjectConfirmText').value.trim()!=='DELETE'){formNote($('#deleteProjectNote'),'Enter DELETE exactly to confirm permanent deletion.','error');return}button.disabled=true;button.textContent='Deleting…';try{try{await supabase.from('entries').delete().eq('project_id',id)}catch(_){}try{await supabase.from('project_access_tokens').delete().eq('project_id',id)}catch(_){}try{await supabase.from('project_members').delete().eq('project_id',id)}catch(_){}const {error}=await supabase.from('projects').delete().eq('id',id);if(error)throw error;state.projects=state.projects.filter(item=>item.id!==id);state.roles.delete(id);if(state.project?.id===id){state.project=null;state.entries=[];state.members=[];state.tokens=[]}state.pendingDeleteProjectId=null;closeModals();note('Project permanently deleted.','success');await loadProjects();showPage('projects')}catch(error){formNote($('#deleteProjectNote'),error.message||'Could not delete this Project.','error')}finally{button.disabled=false;button.textContent='Delete permanently'}}
       function fillDraft(entry){$('#entryTag').value=entry.tag||'';$('#entryAuthor').value=entry.created_by||'';$('#entryType').value=entry.type||'action';$('#entryResult').value=entry.result||'pending';$('#entrySourceType').value=entry.source_type||'direct';$('#entrySourceName').value=entry.source_name||'';$('#entryContent').value=entry.content||''}
       async function refreshAll(){if(!state.session)return;try{await loadProjects();if(state.project){const current=state.projects.find(item=>item.id===state.project.id);if(current)await openProject(current.id,false)}note('Workspace refreshed.')}catch(error){note(error.message||'Refresh failed.')}}
       async function signOut(){await supabase.auth.signOut();state.session=null;state.user=null;state.projects=[];state.project=null;state.entries=[];$('#appView').classList.add('hidden');$('#authView').classList.remove('hidden');updateAuthMode('signin')}
-      $('#signInTab').onclick=()=>updateAuthMode('signin');$('#signUpTab').onclick=()=>updateAuthMode('signup');$('#authForm').addEventListener('submit',handleAuth);$('#signOut').onclick=signOut;$$('[data-page]').forEach(button=>button.addEventListener('click',()=>showPage(button.dataset.page)));$('#refresh').onclick=refreshAll;$('#quickNew').onclick=()=>showPage('write');$('#workspaceNew').onclick=()=>showPage('write');$('#memoryNew').onclick=()=>showPage('write');$('#openCreateProject').onclick=()=>openModal('projectModal');$('#openShareCreate').onclick=()=>{if(!canManageShare()){note('Only the Project owner can create a share link.');return}openModal('shareCreateModal')};$('#copyNewShare').onclick=copyShareUrl;$('#dismissNewShare').onclick=()=>{state.lastShareUrl='';renderShare()};$('#cancelProject').onclick=closeModals;$('#cancelConfirm').onclick=closeModals;$('#cancelShareCreate').onclick=closeModals;$('#cancelShareRevoke').onclick=closeModals;$('#cancelCloseDecision').onclick=()=>{state.pendingEntryId=null;closeModals()};$('#cancelEntryDelete').onclick=()=>{state.pendingDeleteId=null;closeModals()};$('#backdrop').onclick=closeModals;$('#closeInspector').onclick=closeModals;$('#projectForm').addEventListener('submit',createProject);$('#shareCreateForm').addEventListener('submit',createShareLink);$('#entryForm').addEventListener('reset',()=>setTimeout(resetEntryFormMode,0));$('#confirmShareRevoke').onclick=revokeShareLink;$('#confirmCloseDecision').onclick=confirmCloseDecision;$('#confirmEntryDelete').onclick=confirmEntryDelete;$('#newProjectName').addEventListener('input',event=>{if(!$('#newProjectSlug').dataset.touched)$('#newProjectSlug').value=makeSlug(event.target.value)});$('#newProjectSlug').addEventListener('input',event=>event.target.dataset.touched='true');$('#previewEntry').onclick=previewEntry;$('#confirmSave').onclick=saveEntry;$('#memorySearch').addEventListener('input',event=>{state.query=event.target.value;renderMemory()});$('#resultFilter').addEventListener('change',event=>{state.result=event.target.value;renderMemory()});
+      $('#signInTab').onclick=()=>updateAuthMode('signin');$('#signUpTab').onclick=()=>updateAuthMode('signup');$('#authForm').addEventListener('submit',handleAuth);$('#signOut').onclick=signOut;if($('#topSignOut'))$('#topSignOut').onclick=signOut;$$('[data-page]').forEach(button=>button.addEventListener('click',()=>showPage(button.dataset.page)));$('#refresh').onclick=refreshAll;$('#quickNew').onclick=()=>showPage('write');$('#workspaceNew').onclick=()=>showPage('write');$('#memoryNew').onclick=()=>showPage('write');$('#openCreateProject').onclick=()=>openModal('projectModal');if($('#deleteProjectBtn'))$('#deleteProjectBtn').onclick=()=>requestProjectDelete();if($('#deleteProjectAccessBtn'))$('#deleteProjectAccessBtn').onclick=()=>requestProjectDelete();$('#openShareCreate').onclick=()=>{if(!canManageShare()){note('Only the Project owner can create a share link.');return}openModal('shareCreateModal')};$('#copyNewShare').onclick=copyShareUrl;$('#dismissNewShare').onclick=()=>{state.lastShareUrl='';renderShare()};$('#cancelProject').onclick=closeModals;$('#cancelConfirm').onclick=closeModals;$('#cancelShareCreate').onclick=closeModals;$('#cancelShareRevoke').onclick=closeModals;$('#cancelCloseDecision').onclick=()=>{state.pendingEntryId=null;closeModals()};$('#cancelEntryDelete').onclick=()=>{state.pendingDeleteId=null;closeModals()};$('#cancelProjectDelete').onclick=()=>{state.pendingDeleteProjectId=null;closeModals()};$('#backdrop').onclick=closeModals;$('#closeInspector').onclick=closeModals;$('#projectForm').addEventListener('submit',createProject);$('#shareCreateForm').addEventListener('submit',createShareLink);$('#entryForm').addEventListener('reset',()=>setTimeout(resetEntryFormMode,0));$('#confirmShareRevoke').onclick=revokeShareLink;$('#confirmCloseDecision').onclick=confirmCloseDecision;$('#confirmEntryDelete').onclick=confirmEntryDelete;$('#confirmProjectDelete').onclick=confirmProjectDelete;$('#newProjectName').addEventListener('input',event=>{if(!$('#newProjectSlug').dataset.touched)$('#newProjectSlug').value=makeSlug(event.target.value)});$('#newProjectSlug').addEventListener('input',event=>event.target.dataset.touched='true');$('#previewEntry').onclick=previewEntry;$('#confirmSave').onclick=saveEntry;$('#memorySearch').addEventListener('input',event=>{state.query=event.target.value;renderMemory()});$('#resultFilter').addEventListener('change',event=>{state.result=event.target.value;renderMemory()});
       supabase.auth.onAuthStateChange((_event,session)=>{if(session&&(!state.session||state.session.access_token!==session.access_token))enterApp(session);if(!session&&state.session)signOut()});
       const {data:{session}}=await supabase.auth.getSession();if(session)await enterApp(session);else updateAuthMode('signin');
     </script>
